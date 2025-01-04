@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link rel="shortcut icon" href="img/haltere.ico" type="image/x-icon">
+
+
+    <title>Life Balance</title>
+</head>
+<body>
+    <header class="navbar">
+        <main class="contentNav">
+            <main class="lenguage">
+                <button id="btn-pt"><img src="img/brasil.png" alt=""></button>
+                <button id="btn-en"><img src="img/reino-unido.png" alt=""></button>
+                <div><img src="img/haltere32.png" alt="Logo"></div>
+            </main>
+            
+            <button class="hamburguer"></button>
+            <p class="inicio"><a href="#home"><i class="bi bi-caret-up-fill"></i> </a></p>
+            
+            <nav class="menu">
+                <ul class="list">
+                    <li data-lang="pt"><a href="#sobre">Sobre</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#sobre">About</a></li>
+                    <li data-lang="pt"><a href="#skills">IMC</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#skills">IMC</a></li>
+                    <li data-lang="pt"><a href="#projetos">Servicos</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#projetos">Services</a></li>
+                    <li data-lang="pt"><a href="#contato">Contato</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#contato">Contact</a></li>
+                </ul>
+            </nav>
+        </main>
+    </header>
+
+    <main class="conteudo">
+        <div class="text">
+            <h1><span class="life">Life</span> <span class="balance">Balance</span></h1>
+            <h2>Seja bem-vindo ao <span class="balance">Life Balance</span></h2>
+            <button class="sabe">Clique para saber mais <i class="bi bi-bar-chart-fill"></i></button>
+        </div>
+        <div class="container">
+            <form action="/" method="POST">
+                <h1>Informe seus Dados</h1>
+                <input type="text" id="name" name="name" required placeholder=" Nome">
+                <input type="number" id="age" name="age" required placeholder=" Idade">
+                <input type="email" id="email" name="email" required placeholder=" Email">
+                <input type="password" id="password" name="password" required placeholder=" Senha">
+                <input type="number" id="height" name="height" required placeholder=" Altura">
+                <input type="number" id="weight" name="weight" required placeholder=" Peso">
+            </form>
+            <div class="btn">
+                <button type="submit">Enviar  <i class="bi bi-check2-circle"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Seção Sobre -->
+
+    <main class="sobreLife">
+        <div class="Services">
+            
+            <div class="about" id="sobre">
+                <h2>Sobre o Life Balance</h2>
+                <p>O Life Balance é um site de gerenciamento de atividades físicas que ajuda a monitorar o seu desempenho e progresso. O aplicativo contabiliza o 
+                    número de atividades realizadas por mês, permite que você registre as atividades feitas e calcula seu Índice de Massa Corporal (IMC). Com isso, 
+                    você pode acompanhar seu progresso e manter um equilíbrio saudável entre corpo e mente.
+
+                    
+                </p>
+                <img src="img/peso.png" alt="">
+            </div>
+
+            <div class="serv">
+                <h1>Serviços</h1>
+
+
+                    <div class="servico">
+                        <img src="img/atividade.png" alt="">
+                        <h2>Atividades</h2>
+                        <p>Registre suas atividades físicas e acompanhe seu progresso.</p>
+                        <i class="bi bi-calendar2-week-fill"></i>
+                    </div>
+                    <hr>
+                    <div class="servico">
+                        <img src="img/imc.png" alt="">
+                        <h2>IMC</h2>
+                        <p>Calcule seu Índice de Massa Corporal e saiba se está saudável.</p>
+                        <i class="bi bi-calculator-fill"></i>
+                    </div>
+                    <hr>
+                    <div class="servico">
+                        <img src="img/progresso.png" alt="">
+                        <h2>Progresso</h2>
+                        <p>Veja seu progresso e mantenha um equilíbrio saudável.</p>
+                        <i class="bi bi-trophy-fill"></i>
+                    </div>
+                    <hr>
+
+            
+        </div>
+        
+
+        <img src="img/motivacao.jpg" alt="">
+
+    </main>
+
+    
+    <div class="footer-container">
+        <footer class="footer">
+            <div class="social">
+                <h1>Redes Sociais</h1>
+                <div class="icons">
+                    <a href="https://www.facebook.com/" target="_blank"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.twitter.com/" target="_blank"><i class="bi bi-twitter"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <p>© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    
+    
+</body>
+</html>
