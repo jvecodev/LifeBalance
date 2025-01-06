@@ -410,7 +410,7 @@ input::placeholder {
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     font-family: var(--font-text);
 }

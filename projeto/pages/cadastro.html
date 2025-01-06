@@ -49,8 +49,6 @@
                 <h1 data-lang="en" style="display: none;">Enter your Data</h1>
                 <input data-lang="pt" type="text" id="nome" name="name" required placeholder=" Nome">
                 <input data-lang="en" type="text" id="surname" name="name" required placeholder=" Name" style="display: none;">
-                <input data-lang="pt" type="number" id="idade" name="age" required placeholder=" Idade">
-                <input data-lang="en" type="number" id="age" name="age" required placeholder=" Age" style="display: none;">
                 <input data-lang="pt" type="email" id="email" name="email" required placeholder=" Email">
                 <input data-lang="en" type="email" id="email" name="email" required placeholder=" Email" style="display: none;">
                 <input data-lang="pt" type="password" id="senha" name="password" required placeholder=" Senha">
@@ -59,8 +57,8 @@
                 
             </form>
             <div class="btn">
-                <button data-lang="pt" type="submit">Enviar  <i class="bi bi-check2-circle"></i></button>
-                <button data-lang="en" type="submit" style="display: none;">Submit  <i class="bi bi-check2-circle"></i></button>
+                <button data-lang="pt" type="submit" onclick="cadastrar()">Enviar  <i class="bi bi-check2-circle" ></i></button>
+                <button data-lang="en" type="submit" style="display: none;"  onclick="cadastrar()">Submit  <i class="bi bi-check2-circle"></i></button>
             </div>
         </div>
     </main>
