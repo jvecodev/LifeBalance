@@ -122,6 +122,11 @@ dist
 # TernJS port file
 .tern-port
 
+#.package-lock.json file
+
+
+
+
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
