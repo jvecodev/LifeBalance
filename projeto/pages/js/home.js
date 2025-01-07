@@ -1,5 +1,5 @@
 
-//Efeito de rolagem suave
+
 document.querySelectorAll('ul a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
     e.preventDefault();

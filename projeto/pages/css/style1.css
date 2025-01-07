@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Barriecito&family=Playwrite+GB+S+Guides:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Barriecito&family=Playwrite+GB+S+Guides:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap');
+
+
+
+/* Definindo as variáveis de fontes */
+:root {
+    --font-logo: 'Aldrich', sans-serif;
+    --font-text: 'Poppins', sans-serif;
+}
+
+
+/* Corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background-color: #010101;
+    background-image: url('../img/corredor.jpg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+/* Estilo da barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #676767;
+    
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #007BFF;
+    border-radius: 10px;
+    border: 3px solid #333333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo da navbar e da linguagem */
+.lenguage button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    margin-bottom: 10px;
+    border: none;
+    cursor: pointer;
+    
+
+}
+
+
+
+.lenguage button:hover {
+    transition: 0.8s;
+    scale: 1.05;
+}
+
+.lenguage div {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}
+nav{
+    margin-right: 10px;
+}
+.navbar {
+    background-color: #000000;
+    padding: 5px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: var(--font-text);
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.menu a:hover {
+    color: #007BFF;
+    transition: 0.5s;
+    scale: 1.1;
+}
+.contentNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.lenguage {
+    display: flex;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.lenguage p {
+    color: #ffffff;
+    font-family: var(--font-text);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+.lenguage > div > img{
+    margin: 0px 0px 0px 20px;
+    background-color: #ffffff;
+    border-radius: 20%;
+}
+
+.lenguage > div > img:hover {
+    transition: 0.8s;
+    scale: 1.05;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu .list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hamburguer {
+    display: none;
+}
+
+.Welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+    font-family: var(--font-text);
+    font-size: 30px;
+    text-align: center;
+}
+
+.social {
+ 
+    padding: 40px 20px;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.social h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #007BFF;
+}
+
+.social .icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social .icons a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 32px;
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social .icons a:hover {
+    transform: scale(1.2);
+    color: #007BFF;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 50px 0; 
+}
+
+.footer {
+    background: url('../img/nike.jpg') no-repeat center center/cover;
+    padding: 40px 20px;
+    text-align: center;
+    color: #ffffff;
+    font-family: var(--font-text);
+    flex-direction: column;
+    width: 100%;
+    max-width: 100vh; 
+    border-radius: 20px;
+    border: #007BFF 2px solid;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
