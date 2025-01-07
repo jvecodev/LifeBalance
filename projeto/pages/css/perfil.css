@@ -178,7 +178,6 @@ form > h3 {
 
 form > input {
     
-    border: 1px solid #ccc;
     width: 300px;
     height: 40px;
     border: none;
@@ -203,10 +202,20 @@ input::placeholder {
 
 .info p {
     margin-bottom: 20px; /* Aumente o valor conforme necessário */
+    border: #000000 1px solid;
+    padding: 10px;
 }
-.editable:hover {
-    background-color: #e0e0e0;
+
+.info p:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+    transition: 0.5s;
+    scale: 1.05;
+    border-radius: 5px;
 }
+
+
+
 .save-btn {
     margin-top: 10px;
     padding: 5px 10px;
@@ -223,3 +232,4 @@ input[type="text"], input[type="password"], input[type="email"] {
     width: 100%;
     margin-bottom: 20px;
 }
+

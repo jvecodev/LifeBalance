@@ -7,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const senhaValue = document.getElementById('senha-value');
     const saveBtn = document.getElementById('save-btn');
 
-    // Variáveis para armazenar os dados do usuário
     let userData = {
         nome: '',
         email: '',
         senha: ''
     };
 
-    // Função para carregar os dados do usuário
     function carregarPerfil() {
         fetch('/api/perfil')
             .then(response => response.json())
@@ -23,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     userData = {
                         nome: data.usuario.nome,
                         email: data.usuario.email1,
-                        senha: '********'
+                        senha: data.usuario.senha
                     };
 
                     nomeValue.textContent = data.usuario.nome;
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Erro ao carregar perfil:', error));
     }
 
-    // Função para editar os dados diretamente
     function editarCampo(campo) {
         // Salvar o valor original antes de editar
         const valorOriginal = userData[campo];
@@ -78,23 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
     emailSpan.addEventListener('click', () => editarCampo('email'));
     senhaSpan.addEventListener('click', () => editarCampo('senha'));
 
-    // Salvar as edições quando o botão "Salvar" for clicado
     saveBtn.addEventListener('click', () => {
         fetch('/api/perfil', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(userData),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro ao salvar: ${response.statusText}`);
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.message === 'Usuário atualizado com sucesso') {
-                alert('Dados atualizados com sucesso!');
-                saveBtn.style.display = 'none'; // Esconder o botão de salvar após a edição
-                carregarPerfil(); // Recarregar os dados atualizados após salvar
+                console.log('Dados salvos com sucesso!');
+                saveBtn.style.display = 'none'; 
+            } else {
+                console.error('Resposta inesperada:', data);
             }
         })
         .catch(error => console.error('Erro ao salvar dados:', error));
     });
+    
+    
 });
