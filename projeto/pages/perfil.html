@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/perfil.css"/>
     <link rel="shortcut icon" href="img/haltere.ico" type="image/x-icon">
     <title>Life Balance</title>
-    
 </head>
 
 <body>
@@ -25,7 +24,8 @@
         
         <nav class="menu">
             <ul class="list">
-                <li><a href="./home.html"><i class="bi bi-backspace-fill"></i> Voltar</a></li>
+                <li><a data-lang="pt" href="./home.html"><i class="bi bi-backspace-fill"></i> Voltar</a></li>
+                <li><a data-lang="en" style="display: none;" href="./home.html"><i class="bi bi-backspace-fill"></i> Go back</a></li>
             </ul>
         </nav>
     </main>
@@ -35,9 +35,29 @@
     <h3>Dados Pessoais</h3>
     
     <div class="info">
-        <p><span id="nome" class="editable">Nome: </span><span id="nome-value"></span></p>
-        <p><span id="email" class="editable">Email: </span><span id="email-value"></span></p>
-        <p><span id="senha" class="editable">Senha: </span><span id="senha-value">********</span></p>
+        <p data-lang="pt"><span id="nome-pt" class="editable">Nome: </span><span id="nome-value"></span></p>
+        <p data-lang="en" style="display: none;"><span id="nome-en" class="editable">Name: </span><span id="nome-value-en"></span></p>
+        <p data-lang="pt"><span id="email-pt" class="editable">Email: </span><span id="email-value"></span></p>
+        <p data-lang="en" style="display: none;"><span id="email-en" class="editable">Email: </span><span id="email-value-en"></span></p>
+        <p data-lang="pt"><span id="senha-pt">Senha:</span> <button id="edit-senha-btn" class="edit-senha">Editar Senha</button></p>
+        <p data-lang="en" style="display: none;"><span id="senha-en">Password:</span> <button id="edit-senha-btn-en" class="edit-senha">Edit Password</button></p>
+    </div>
+    
+    <!-- Formulário de edição de senha (escondido inicialmente) -->
+    <div id="senha-form-container" class="senha" style="display: none;" >
+        <form id="senha-form">
+
+            <input data-lang="pt" type="password" id="nova-senha" required placeholder="Nova Senha"/>
+            <input data-lang="en" type="password" style="display: none;" id="nova-senha" required placeholder="New password"/>
+            <input data-lang="pt" type="password" id="confirmar-senha" required placeholder="Confirmar"/>
+            <input data-lang="en" type="password" style="display: none;" id="confirmar-senha" required placeholder="Confirm"/>
+            <button data-lang="pt" type="submit">Salvar</button>
+            <button data-lang="en" style="display: none;" type="submit">Save</button>
+            <button data-lang="pt" type="button" id="cancelar-senha-btn">Cancelar</button>
+            <button data-lang="en" type="button" style="display: none;" id="cancelar-senha-btn">Cancel</button>
+
+
+        </form>
     </div>
 
     <button class="save-btn" id="save-btn" style="display:none;">Salvar</button>

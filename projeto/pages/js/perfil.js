@@ -1,11 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const nomeSpan = document.getElementById('nome');
-    const emailSpan = document.getElementById('email');
-    const senhaSpan = document.getElementById('senha');
-    const nomeValue = document.getElementById('nome-value');
-    const emailValue = document.getElementById('email-value');
-    const senhaValue = document.getElementById('senha-value');
+    const nomePt = document.getElementById('nome-pt');
+    const nomeEn = document.getElementById('nome-en');
+    const emailPt = document.getElementById('email-pt');
+    const emailEn = document.getElementById('email-en');
+    const senhaPt = document.getElementById('senha-pt');
+    const senhaEn = document.getElementById('senha-en');
     const saveBtn = document.getElementById('save-btn');
+    const editSenhaBtn = document.getElementById('edit-senha-btn');
+    const editSenhaBtnEn = document.getElementById('edit-senha-btn-en');
+    const senhaFormContainer = document.getElementById('senha-form-container');
+    const senhaForm = document.getElementById('senha-form');
+    const cancelarSenhaBtn = document.getElementById('cancelar-senha-btn');
+    const btnPt = document.getElementById('btn-pt');
+    const btnEn = document.getElementById('btn-en');
 
     let userData = {
         nome: '',
@@ -24,56 +31,59 @@ document.addEventListener('DOMContentLoaded', () => {
                         senha: data.usuario.senha
                     };
 
-                    nomeValue.textContent = data.usuario.nome;
-                    emailValue.textContent = data.usuario.email1;
+                    document.getElementById('nome-value').textContent = data.usuario.nome;
+                    document.getElementById('nome-value-en').textContent = data.usuario.nome;
+                    document.getElementById('email-value').textContent = data.usuario.email1;
+                    document.getElementById('email-value-en').textContent = data.usuario.email1;
                 }
             })
             .catch(error => console.error('Erro ao carregar perfil:', error));
     }
 
-    function editarCampo(campo) {
-        // Salvar o valor original antes de editar
+    function editarCampo(campo, lang) {
+        const campoValue = document.getElementById(`${campo}-value${lang === 'en' ? '-en' : ''}`);
         const valorOriginal = userData[campo];
 
-        // Criar o campo de input
         const input = document.createElement('input');
         input.type = campo === 'senha' ? 'password' : 'text';
         input.value = valorOriginal;
-        input.setAttribute('class', 'editable');
-
-        // Substituir o valor exibido pelo input
-        const campoValue = document.getElementById(`${campo}-value`);
-        campoValue.textContent = ''; // Limpa o conteúdo do span
-        campoValue.appendChild(input); // Adiciona o input ao lugar do span
+        campoValue.textContent = '';
+        campoValue.appendChild(input);
 
         input.focus();
 
-        // Quando o input perde o foco, salvar o novo valor
         input.addEventListener('blur', () => {
             if (input.value !== valorOriginal) {
                 userData[campo] = input.value;
                 campoValue.textContent = input.value;
-                saveBtn.style.display = 'inline-block'; // Exibir o botão de salvar
+                saveBtn.style.display = 'inline-block';
             } else {
                 campoValue.textContent = valorOriginal;
             }
         });
-
-        // Remover o evento de pressionamento de Enter
-        input.removeEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                input.blur();
-            }
-        });
     }
 
-    // Carregar os dados assim que a página carregar
+    function alterarIdioma(idioma) {
+        const elementosPt = document.querySelectorAll('[data-lang="pt"]');
+        const elementosEn = document.querySelectorAll('[data-lang="en"]');
+
+        if (idioma === 'pt') {
+            elementosPt.forEach(element => element.style.display = 'block');
+            elementosEn.forEach(element => element.style.display = 'none');
+        } else {
+            elementosPt.forEach(element => element.style.display = 'none');
+            elementosEn.forEach(element => element.style.display = 'block');
+        }
+    }
+
     carregarPerfil();
 
-    // Eventos de clique para edição dos dados
-    nomeSpan.addEventListener('click', () => editarCampo('nome'));
-    emailSpan.addEventListener('click', () => editarCampo('email'));
-    senhaSpan.addEventListener('click', () => editarCampo('senha'));
+    nomePt.addEventListener('click', () => editarCampo('nome', 'pt'));
+    nomeEn.addEventListener('click', () => editarCampo('nome', 'en'));
+    emailPt.addEventListener('click', () => editarCampo('email', 'pt'));
+    emailEn.addEventListener('click', () => editarCampo('email', 'en'));
+    senhaPt.addEventListener('click', () => editarCampo('senha', 'pt'));
+    senhaEn.addEventListener('click', () => editarCampo('senha', 'en'));
 
     saveBtn.addEventListener('click', () => {
         fetch('/api/perfil', {
@@ -84,22 +94,64 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(userData),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro ao salvar: ${response.statusText}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             if (data.message === 'Usuário atualizado com sucesso') {
                 console.log('Dados salvos com sucesso!');
-                saveBtn.style.display = 'none'; 
+                saveBtn.style.display = 'none';
+                senhaFormContainer.style.display = 'none'; // Esconder o formulário de senha após salvar
             } else {
-                console.error('Resposta inesperada:', data);
+                console.error('Erro inesperado:', data);
             }
         })
         .catch(error => console.error('Erro ao salvar dados:', error));
     });
-    
-    
+
+    // Edição da senha
+    editSenhaBtn.addEventListener('click', () => {
+        senhaFormContainer.style.display = 'block';
+    });
+    editSenhaBtnEn.addEventListener('click', () => {
+        senhaFormContainer.style.display = 'block';
+    });
+
+    cancelarSenhaBtn.addEventListener('click', () => {
+        senhaFormContainer.style.display = 'none';
+    });
+
+    senhaForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const novaSenha = document.getElementById('nova-senha').value;
+        const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+        if (novaSenha !== confirmarSenha) {
+            alert('As senhas não coincidem');
+            return;
+        }
+
+        userData.senha = novaSenha;
+
+        fetch('/api/perfil', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(userData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Usuário atualizado com sucesso') {
+                console.log('Senha alterada com sucesso!');
+                senhaFormContainer.style.display = 'none'; // Esconder o formulário de senha após salvar
+            } else {
+                console.error('Erro inesperado:', data);
+            }
+        })
+        .catch(error => console.error('Erro ao salvar dados:', error));
+    });
+
+    // Trocar idioma
+    btnPt.addEventListener('click', () => alterarIdioma('pt'));
+    btnEn.addEventListener('click', () => alterarIdioma('en'));
 });

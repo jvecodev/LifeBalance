@@ -74,7 +74,9 @@ body {
     
 
 }
-
+.lenguage p{
+    color: #000000;
+}
 
 
 .lenguage button:hover {
@@ -129,6 +131,7 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 20px;
 
 }
 .lenguage p {

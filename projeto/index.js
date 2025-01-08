@@ -62,27 +62,46 @@ app.get('/api/perfil', async (req, res) => {
     }
 });
 
-// Endpoint para atualizar o perfil do usuário
+
+
 app.put('/api/perfil', autenticarToken, async (req, res) => {
     console.log('Dados recebidos no PUT:', req.body);
     console.log('Usuário autenticado:', req.user);
 
     try {
-        const { nome, email } = req.body;
+        const { nome, email, senha } = req.body;
 
-        const [usuarioAtualizado] = await connection.query(
-            'UPDATE Usuario SET nome = ?, email1 = ? WHERE id_usuario = ?',
-            [nome, email, req.user.id_usuario]
+        // Atualizar apenas nome e email
+        if (!senha) {
+            const [usuarioAtualizado] = await connection.query(
+                'UPDATE Usuario SET nome = ?, email1 = ? WHERE id_usuario = ?',
+                [nome, email, req.user.id_usuario]
+            );
+
+            if (usuarioAtualizado.affectedRows > 0) {
+                return res.json({ message: 'Usuário atualizado com sucesso' });
+            } else {
+                return res.status(400).json({ error: 'Usuário não encontrado ou não atualizado' });
+            }
+        }
+
+        // Caso a senha esteja presente, criptografá-la e atualizar apenas a senha
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(senha, saltRounds);
+
+        const [senhaAtualizada] = await connection.query(
+            'UPDATE Usuario SET senha = ? WHERE id_usuario = ?',
+            [hashedPassword, req.user.id_usuario]
         );
 
-        if (usuarioAtualizado.affectedRows > 0) {
-            res.json({ message: 'Usuário atualizado com sucesso' });
+        if (senhaAtualizada.affectedRows > 0) {
+            return res.json({ message: 'Senha atualizada com sucesso' });
         } else {
-            res.status(400).json({ error: 'Usuário não encontrado ou não atualizado' });
+            return res.status(400).json({ error: 'Erro ao atualizar a senha' });
         }
     } catch (error) {
         console.error('Erro ao atualizar usuário:', error);
-        res.status(500).json({ error: 'Erro interno no servidor' });
+        return res.status(500).json({ error: 'Erro interno no servidor' });
     }
 });
 
