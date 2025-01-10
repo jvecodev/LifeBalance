@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.usuario) {
                     userData = {
                         nome: data.usuario.nome,
-                        email: data.usuario.email1,
+                        email: data.usuario.email,
                         senha: data.usuario.senha
                     };
 
                     document.getElementById('nome-value').textContent = data.usuario.nome;
                     document.getElementById('nome-value-en').textContent = data.usuario.nome;
-                    document.getElementById('email-value').textContent = data.usuario.email1;
-                    document.getElementById('email-value-en').textContent = data.usuario.email1;
+                    document.getElementById('email-value').textContent = data.usuario.email;
+                    document.getElementById('email-value-en').textContent = data.usuario.email;
                 }
             })
             .catch(error => console.error('Erro ao carregar perfil:', error));

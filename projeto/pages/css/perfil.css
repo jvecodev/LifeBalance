@@ -102,6 +102,11 @@ nav{
     font-size: 18px;
 }
 
+.lenguage a:hover{
+    transition: 0.8s;
+    scale: 1.1;
+}
+
 
 .lenguage > div > img{
     margin: 0px 0px 0px 20px;
@@ -111,7 +116,7 @@ nav{
 
 .lenguage > div > img:hover {
     transition: 0.8s;
-    scale: 1.05;
+    scale: 1.01;
 }
 
 .menu {

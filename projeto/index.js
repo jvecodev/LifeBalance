@@ -48,7 +48,7 @@ function autenticarToken(req, res, next) {
 // Endpoint para buscar o perfil do usuário
 app.get('/api/perfil', async (req, res) => {
     try {
-        const query = 'SELECT nome, email1 FROM Usuario ORDER BY id_usuario DESC LIMIT 1';
+        const query = 'SELECT nome, email FROM Usuario ORDER BY id_usuario DESC LIMIT 1';
         const [results] = await connection.query(query);
 
         if (results.length === 0) {
@@ -74,7 +74,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
         // Atualizar apenas nome e email
         if (!senha) {
             const [usuarioAtualizado] = await connection.query(
-                'UPDATE Usuario SET nome = ?, email1 = ? WHERE id_usuario = ?',
+                'UPDATE Usuario SET nome = ?, email = ? WHERE id_usuario = ?',
                 [nome, email, req.user.id_usuario]
             );
 
@@ -131,7 +131,7 @@ app.post('/api/cadastrar', async (req, res) => {
     try {
         const hashedPassword = bcrypt.hashSync(senha, 10);
 
-        const query = 'INSERT INTO Usuario (nome, email1, senha) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)';
         await connection.query(query, [nome, email, hashedPassword]);
 
         res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
@@ -150,7 +150,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     try {
-        const query = 'SELECT * FROM Usuario WHERE email1 = ?';
+        const query = 'SELECT * FROM Usuario WHERE email = ?';
         const [results] = await connection.query(query, [email]);
 
         if (results.length === 0) {
@@ -163,7 +163,7 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ message: 'Email ou senha incorretos' });
         }
 
-        const token = jwt.sign({ id_usuario: usuario.id_usuario, nome: usuario.nome }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id_usuario: usuario.id_usuario, nome: usuario.nome }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
         res.status(200).json({ message: 'Login bem-sucedido', token });
     } catch (err) {
@@ -172,7 +172,69 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+app.post('/api/metas', autenticarToken, async (req, res) => {
+    const { descricao, data_criacao } = req.body;
+
+    if (!descricao || !data_criacao) {
+        return res.status(400).json({ message: 'Por favor, insira uma meta válida' });
+    }
+
+    try {
+        const query = 'INSERT INTO Metas (id_usuario, descricao, data_criacao) VALUES (?, ?, ?)';
+        await connection.query(query, [req.user.id_usuario, descricao, data_criacao]);
+
+        res.status(201).json({ message: 'Meta registrada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao registrar meta:', error);
+        res.status(500).json({ message: 'Erro ao registrar meta' });
+    }
+
+    
+});
+
+app.get('/api/metas', autenticarToken, async (req, res) => {
+    try {
+        const query = 'SELECT * FROM Metas WHERE id_usuario = ?';
+        const [metas] = await connection.query(query, [req.user.id_usuario]);
+
+        if (metas.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma meta encontrada' });
+        }
+
+        res.status(200).json({ metas });
+    } catch (error) {
+        console.error('Erro ao buscar metas:', error);
+        res.status(500).json({ message: 'Erro ao buscar metas' });
+    }
+});
+
+app.delete('/api/metas/:id_meta', autenticarToken, async (req, res) => {
+    const { id_meta } = req.params;
+
+    try {
+        // Verifica se a meta pertence ao usuário
+        const [meta] = await connection.query('SELECT * FROM Metas WHERE id_meta = ? AND id_usuario = ?', [id_meta, req.user.id_usuario]);
+
+        if (meta.length === 0) {
+            return res.status(404).json({ message: 'Meta não encontrada ou não pertence ao usuário' });
+        }
+
+        const deleteQuery = 'DELETE FROM Metas WHERE id_meta = ?';  // Corrigir o nome do campo para 'id_meta'
+        await connection.query(deleteQuery, [id_meta]);
+
+        res.status(200).json({ message: 'Meta concluída e removida com sucesso' });
+    } catch (error) {
+        console.error('Erro ao excluir meta:', error);
+        res.status(500).json({ message: 'Erro ao excluir meta' });
+    }
+});
+
+
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
+

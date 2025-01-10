@@ -24,7 +24,6 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    overflow: scroll;
     overflow-x: hidden;
 }
 
@@ -64,7 +63,7 @@ body {
 
 .lenguage button:hover {
     transition: 0.8s;
-    scale: 1.05;
+    scale: 1.1;
 }
 
 .lenguage div {
@@ -72,6 +71,8 @@ body {
     gap: 10px;
     margin-left: 20px;
 }
+
+
 nav{
     margin-right: 10px;
 }
@@ -163,6 +164,94 @@ nav{
     text-align: center;
 }
 
+.metas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #000000;
+    background-color: rgb(255, 255, 255);
+    font-family: var(--font-text);
+    font-size: 30px;
+    text-align: center;
+    flex-direction: column;
+    margin-bottom: 300px;
+    
+
+    
+}
+
+.metas .discurso{
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.form-metas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    margin-top: 20px;
+    height: 100vh;
+    background-color: #afafaf;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    background: url(../img/peso.png) no-repeat center ;
+}
+
+.form-metas input {
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 40px;
+    border: blue 2px solid;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-family: var(--font-text);
+
+}
+
+.form-metas input::placeholder {
+    color: #000000;
+}
+
+.metas button{
+    width: 100px;
+    height: 30px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: var(--font-text);
+    font-size: 16px;
+    cursor: pointer;
+}
+.metas button:hover {
+    background-color: #0056b3;
+    transition: 0.5s;
+    scale: 1.1;
+
+}
+
+
+.card {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background-color: #007BFF;
+}
+
+
 .social {
  
     padding: 40px 20px;
@@ -217,4 +306,82 @@ nav{
     border-radius: 20px;
     border: #007BFF 2px solid;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.metascontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    border-radius: 10px;
+
+
+    
+}
+
+.m2 p{
+    font-size: 16px;
+    font-family: var(--font-text);
+    margin-top: 10px ;
+    color: #ffffff;
+    background-color: rgba(109, 108, 108, 0.836);
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.metascontainer p:hover {
+    transition: 0.5s;
+    scale: 1.05;
+}
+
+.m2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #afafaf;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+
+}
+
+.m2 button{
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: var(--font-text);
+    font-size: 16px;
+    cursor: pointer;
+    width: 25px;
+    background-color: transparent;
+    margin: 0 10px;
+    
+}
+
+.m2 button:hover {
+    background-color: transparent !important;
+    transition: 0.5s;
+    scale: 1.05;
+
+}
+
+.m2 i{
+    color: #0044ff;
+    font-size: 20px;
+    
+}
+
+.m2 i:hover {
+    color: #009e3d;
+    transition: 0.5s;
+    scale: 1.1;
 }

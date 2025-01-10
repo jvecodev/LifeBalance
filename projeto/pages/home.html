@@ -24,6 +24,8 @@
             <nav class="menu">
                 <li><a href="perfil.html"><i class="bi bi-person-fill" ></i></a></li>
                 <ul class="list">
+                    <li data-lang="pt"><a href="#metas">Metas</a></li>
+                    <li data-lang="en"style="display: none;" ><a href="./metas.html">Goals</a></li>
                     <li data-lang="pt"><a href="#IMC">IMC</a></li>
                     <li data-lang="en" style="display: none;"><a href="#IMC">IMC</a></li>
                     <li data-lang="pt"><a href="#Servicos">Servicos</a></li>
@@ -38,12 +40,46 @@
         <section class="Welcome">
             <div class="main">
                
-                <h3 id="mensagem" class="mensagem"></h3>
+                <h3 data-lang="pt" id="mensagem" class="mensagem"></h3>
+                <h3 data-lang="en" style="display: none;" id="msg" class="mensagem"></h3>
                 
 
             </div>
         </section>
     </div>
+
+    <div id="metas" class="metas">
+        <h2 data-lang="pt">Suas metas</h2>
+        <h2 data-lang="en" style="display: none;" >Your Goals</h2>
+        
+        <p data-lang="pt" class="discurso">Com o Life Balance, você pode definir metas e contar com nosso apoio para alcançá-las de forma eficiente e motivadora.</p>
+        <p data-lang="en"   class="discurso"style="display: none;">With Life Balance, you can set goals and count on our support to achieve them efficiently and motivating.</p>
+        <button  data-lang="pt" class="metasBtn" id="edit-metas">Determine</button>
+        <button  data-lang="en" style="display: none;" class="metasBtn" id="edit-metas">Determine</button>
+
+        <form action="" id="form-metas" class="form-metas" style="display: none;">
+            <div class="mb-3">
+                <input type="text" id="meta" name="meta" class="form-control" placeholder="metas" required>
+            </div>
+        
+            <button type="submit" class="registrar" id="registrar">Registrar</button>
+            <button class="cancel" id="cancel">Cancelar</button>
+            
+            <div id="metascontainer" class="metascontainer"></div>
+            
+            
+        </form>
+        
+
+        <div>
+            <h3 data-lang="pt" id="msg-mestas"></h3>
+        </div>
+        
+
+    </div>
+
+    
+
     <div class="footer-container" id="contato">
         <footer class="footer">
             <div class="social">
@@ -64,9 +100,12 @@
         </footer>
     </div>
     
-
-
     
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./js/meta.js"></script>
+  
 <script src="./js/logado.js"></script>
 </body>
 </html>
