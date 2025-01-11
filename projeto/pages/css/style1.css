@@ -175,10 +175,17 @@ nav{
     font-size: 30px;
     text-align: center;
     flex-direction: column;
-    margin-bottom: 300px;
+    margin-bottom: 100px;
+    font-family: var(--font-text);
     
 
     
+}
+
+.metas h3{
+    font-size: 20px;
+    margin-bottom: 40px;
+
 }
 
 .metas .discurso{
@@ -220,18 +227,18 @@ nav{
 .metas button{
     width: 100px;
     height: 30px;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
+    border: #007BFF 2px solid;
+    background-color: #007bff94;
+    border-radius: 20px;
     color: #ffffff;
     font-family: var(--font-text);
     font-size: 16px;
     cursor: pointer;
 }
 .metas button:hover {
-    background-color: #0056b3;
-    transition: 0.5s;
-    scale: 1.1;
+    transition: 0.8s;
+    scale: 1.05;
+    background-color: #0059ff;
 
 }
 
@@ -325,7 +332,6 @@ nav{
     font-family: var(--font-text);
     margin-top: 10px ;
     color: #ffffff;
-    background-color: rgba(109, 108, 108, 0.836);
     padding: 5px;
     border-radius: 20px;
     display: flex;
@@ -344,12 +350,11 @@ nav{
     align-items: center;
     flex-direction: row;
     gap: 5px;
-    width: 100%;
     margin-top: 20px;
-    background-color: #afafaf;
+    background-color: rgba(160, 160, 160, 0.836);
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    padding: 10px;
+    padding: 5px;
 
 }
 
@@ -376,12 +381,24 @@ nav{
 
 .m2 i{
     color: #0044ff;
-    font-size: 20px;
+    font-size: 25px;
     
 }
 
 .m2 i:hover {
-    color: #009e3d;
+    color: #00ca4e;
     transition: 0.5s;
     scale: 1.1;
+}
+
+.resultado p{
+    font-size: 16px;
+    font-family: var(--font-text);
+    margin-top: 10px ;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

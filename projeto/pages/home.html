@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style1.css">
+    <link rel="stylesheet" href="./css/progresso.css">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="img/haltere.ico" type="image/x-icon">
@@ -27,9 +28,9 @@
                     <li data-lang="pt"><a href="#metas">Metas</a></li>
                     <li data-lang="en"style="display: none;" ><a href="./metas.html">Goals</a></li>
                     <li data-lang="pt"><a href="#IMC">IMC</a></li>
-                    <li data-lang="en" style="display: none;"><a href="#IMC">IMC</a></li>
-                    <li data-lang="pt"><a href="#Servicos">Servicos</a></li>
-                    <li data-lang="en" style="display: none;"><a href="#Servicos">Services</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#IMC">BMI</a></li>
+                    <li data-lang="pt"><a href="#register-activity">Atividades</a></li>
+                    <li data-lang="en" style="display: none;"><a href="#register-activity">Activities</a></li>
                     <li data-lang="pt"><a href="#contato">Contato</a></li>
                     <li data-lang="en" style="display: none;"><a href="#contato">Contact</a></li>
                 </ul>
@@ -63,9 +64,11 @@
             </div>
         
             <button type="submit" class="registrar" id="registrar">Registrar</button>
-            <button class="cancel" id="cancel">Cancelar</button>
+
+            <button class="cancel" id="cancel">Fechar</button>
             
-            <div id="metascontainer" class="metascontainer"></div>
+            <div id="metascontainer" class="metascontainer">
+            </div>
             
             
         </form>
@@ -76,8 +79,103 @@
         </div>
         
 
+    </div>]
+
+    <div class="aboutIMC">
+        <div class="texto">
+            <h3 data-lang="pt">O IMC, ou Índice de Massa Corporal, é um cálculo que indica se uma pessoa está com o peso ideal.</h3>
+            <h3 data-lang="en" style="display: none;">BMI, or Body Mass Index, is a calculation that indicates whether a person is at the ideal weight.</h3>
+
+            <div class="img">
+                <h4 data-lang="pt">Recomendado pela OMS</h4>
+                <h4 data-lang="en" style="display: none;">Recommended by WHO</h4>
+                <img src="./img/saude.png" alt="">
+            </div>
+            
+        </div>
+        
+        <div class="IMC" id="IMC">
+            <h2 data-lang="pt">Calcule seu IMC</h2>
+            <h2 data-lang="en" style="display: none;">Calculate your BMI</h2>
+            
+            <form action="" method="post" id="form-imc" >
+                <div class="mb-3">
+                    <input data-lang="pt" type="number" id="peso" name="peso" class="form-control" required placeholder="Peso Kg">
+                    <input data-lang="en" style="display: none;" type="number" id="peso" name="peso" class="form-control"  placeholder="weight">
+                </div>
+                <div class="mb-3">
+                    <input  data-lang="pt" type="number" id="altura" name="altura" class="form-control" required placeholder="Altura Cm 1,70 = 170">
+                    <input  data-lang="en" style="display: none;" type="number" id="altura" name="altura" class="form-control"  placeholder="Height">
+
+                </div>
+                <button type="submit" class="calcular" id="calcular"><i class="bi bi-calculator"></i></button>
+            </form>
+            <div id="resultado" class="resultado"></div>
+        </div>
+    </div>  
+
+    <div class="register-activity" id="register-activity">
+        <h2 data-lang="pt">Registrar Atividade</h2>
+        <h2 data-lang="en" style="display: none;">Register Activity/Training</h2>
+    
+        <form id="activity-form" class="activity-form" action="#" method="POST">
+            
+            <div class="form">
+                <label for="activity" data-lang="pt">Atividade</label>
+                <label for="activity" data-lang="en" style="display: none;">Activity</label>
+                <select id="activity" name="activity" required>
+                    <option value="" disabled selected data-lang="pt">Selecione uma atividade</option>
+                    <option value="" disabled selected data-lang="en" style="display: none;">Select an activity</option>
+                    <option value="corrida" data-lang="pt">Corrida</option>
+                    <option value="corrida" data-lang="en" style="display: none;">Running</option>
+                    <option value="ciclismo" data-lang="pt">Ciclismo</option>
+                    <option value="ciclismo" data-lang="en" style="display: none;">Cycling</option>
+                    <option value="musculacao" data-lang="pt">Musculação</option>
+                    <option value="musculacao" data-lang="en" style="display: none;">Weight Training</option>
+                    <option value="natacao" data-lang="pt">Natação</option>
+                    <option value="natacao" data-lang="en" style="display: none;">Swimming</option>
+                    <option value="outro" data-lang="pt">Outro</option>
+                    <option value="outro" data-lang="en" style="display: none;">Other</option>
+                </select>
+            </div>
+            
+            
+            
+    
+            <!-- Data do treino -->
+            <div class="data">
+                <label for="date" data-lang="pt">Data do Treino</label>
+                <label for="date" data-lang="en" style="display: none;">Training Date</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+    
+            <!-- Botões de ação -->
+            <div class="btn">
+                <button type="button" id="registrarAtividade" class="btn-submit" data-lang="pt">Registrar</button>
+                <button type="button" class="btn-submit" id="registrarAtividade" data-lang="en" style="display: none;">Register</button>
+                <button type="reset" class="btn-cancel" data-lang="pt">Cancelar</button>
+                <button type="reset" class="btn-cancel" data-lang="en" style="display: none;">Cancel</button>
+            </div>
+        </form>
     </div>
 
+    <!-- Gráfico de Atividades por Semana -->
+    <div class="grafico-container">
+        <canvas id="graficoSemana"></canvas>
+    </div>
+
+    <!-- Gráfico de Atividades por Mês -->
+    <div class="grafico-container">
+        <canvas id="graficoMes"></canvas>
+    </div>
+
+    <!-- Gráfico de Contagem de Atividades por Tipo -->
+    <div class="grafico-container">
+        <canvas id="graficoAtividades"></canvas>
+    </div>
+
+
+    
     
 
     <div class="footer-container" id="contato">
@@ -99,9 +197,6 @@
                 <p data-lang="en" style="display: none;">Phone: (41) 98873-4741</p>
         </footer>
     </div>
-    
-    
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./js/meta.js"></script>

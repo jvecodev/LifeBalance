@@ -229,7 +229,126 @@ app.delete('/api/metas/:id_meta', autenticarToken, async (req, res) => {
     }
 });
 
+// Rota para usuario_caract
 
+
+
+app.post('/api/caracteristica', autenticarToken, async (req, res) => {
+    const { Peso, Altura, imc } = req.body;
+
+    if (!Peso || !Altura || !imc) {
+        return res.status(400).json({ message: 'Por favor, insira uma caracteristica válida' });
+    }
+
+    try {
+        const query = 'INSERT INTO Usuario_caract (id_usuario, Peso, Altura, imc) VALUES (?, ?, ?, ?)';
+        await connection.query(query, [req.user.id_usuario, Peso, Altura, imc]);
+
+        res.status(201).json({ message: 'Caracteristica registrada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao registrar caracteristica:', error);
+        res.status(500).json({ message: 'Erro ao registrar caracteristica' });
+    }
+});
+
+app.post('/api/atividades', autenticarToken, async (req, res) => {
+    const { atividade, data_treino } = req.body;
+
+    if (!atividade || !data_treino) {
+        return res.status(400).json({ message: 'Por favor, insira uma atividade válida' });
+    }
+
+    try {
+        const query = 'INSERT INTO Atividades (id_usuario, atividade, data_treino) VALUES (?, ?, ?)';
+        await connection.query(query, [req.user.id_usuario, atividade, data_treino]); 
+        
+
+        res.status(201).json({ message: 'Atividade registrada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao registrar atividade:', error);
+        res.status(500).json({ message: 'Erro ao registrar atividade' });
+    }
+});
+
+app.get('/api/atividades', autenticarToken, async (req, res) => {
+    try {
+        // Pegando o id do usuário do token
+        const idUsuario = req.user.id_usuario;
+
+        // Consultando as atividades no banco de dados
+        const query = 'SELECT * FROM Atividades WHERE id_usuario = ?';
+        const [atividades] = await connection.query(query, [idUsuario]);
+
+        // Verificando se há atividades e respondendo com os dados
+        if (atividades.length === 0) {
+            return res.status(200).json({ atividades: [] });
+        }
+
+        return res.status(200).json({ atividades });
+    } catch (error) {
+        console.error('Erro ao buscar atividades:', error);
+        res.status(500).json({ message: 'Erro ao buscar atividades' });
+    }
+});
+
+app.get('/api/atividades-contagem', autenticarToken, async (req, res) => {
+    try {
+        const { tipo, periodo } = req.query;
+        const idUsuario = req.user.id_usuario;
+
+        let query = '';
+        let params = [idUsuario];
+
+        if (periodo === 'semana') {
+            query = `
+                SELECT atividade, COUNT(*) AS contagem
+                FROM Atividades
+                WHERE id_usuario = ? AND WEEK(data_treino) = WEEK(CURRENT_DATE)
+                GROUP BY atividade
+            `;
+        } else if (periodo === 'mes') {
+            query = `
+                SELECT atividade, COUNT(*) AS contagem
+                FROM Atividades
+                WHERE id_usuario = ? AND MONTH(data_treino) = MONTH(CURRENT_DATE)
+                GROUP BY atividade
+            `;
+        }
+
+        // Se o tipo foi passado, incluímos na consulta
+        if (tipo) {
+            query += ' AND atividade = ?';
+            params.push(tipo);
+        }
+
+        const [resultados] = await connection.query(query, params);
+
+        if (resultados.length === 0) {
+            return res.status(200).json({ atividades: [] });
+        }
+
+        // Garantir que a resposta esteja no formato esperado
+        const atividadesPorTipo = {
+            musculacao: 0,
+            ciclismo: 0,
+            corrida: 0,
+            natacao: 0,
+            outro: 0
+        };
+
+        // Preencher a contagem de atividades
+        resultados.forEach(item => {
+            if (atividadesPorTipo.hasOwnProperty(item.atividade)) {
+                atividadesPorTipo[item.atividade] = item.contagem;
+            }
+        });
+
+        return res.status(200).json({ atividades: atividadesPorTipo });
+    } catch (error) {
+        console.error('Erro ao contar atividades:', error);
+        res.status(500).json({ message: 'Erro ao contar atividades' });
+    }
+});
 
 
 const PORT = process.env.PORT || 3000;
