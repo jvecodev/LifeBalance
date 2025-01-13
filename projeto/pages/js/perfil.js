@@ -99,15 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.message === 'Usuário atualizado com sucesso') {
                 console.log('Dados salvos com sucesso!');
                 saveBtn.style.display = 'none';
-                senhaFormContainer.style.display = 'none'; // Esconder o formulário de senha após salvar
-            } else {
+                senhaFormContainer.style.display = 'none'; 
                 console.error('Erro inesperado:', data);
             }
         })
         .catch(error => console.error('Erro ao salvar dados:', error));
     });
 
-    // Edição da senha
+
     editSenhaBtn.addEventListener('click', () => {
         senhaFormContainer.style.display = 'block';
     });
@@ -143,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.message === 'Usuário atualizado com sucesso') {
                 console.log('Senha alterada com sucesso!');
-                senhaFormContainer.style.display = 'none'; // Esconder o formulário de senha após salvar
+                senhaFormContainer.style.display = 'none'; 
             } else {
                 console.error('Erro inesperado:', data);
             }
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Erro ao salvar dados:', error));
     });
 
-    // Trocar idioma
+
     btnPt.addEventListener('click', () => alterarIdioma('pt'));
     btnEn.addEventListener('click', () => alterarIdioma('en'));
 });

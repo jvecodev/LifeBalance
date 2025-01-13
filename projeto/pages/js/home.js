@@ -1,3 +1,19 @@
+const menuToggle = document.getElementById("menu-toggle");
+const menu = document.getElementById("menu");
+
+document.querySelector('#menu-toggle').addEventListener('click', () => {
+    document.querySelector('.menu').classList.toggle('active');
+});
+
+
+const menuItems = document.querySelectorAll(".list");
+
+menuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        menu.classList.remove("active");
+    });
+});
+
 
 
 document.querySelectorAll('ul a').forEach(anchor => {
@@ -9,7 +25,7 @@ document.querySelectorAll('ul a').forEach(anchor => {
     });
 });
 });
-// Efeito de rolagem para o topo do site 
+
 document.querySelector('.lenguage div').addEventListener('click', function () {
     window.scrollTo({
         top: 0,
@@ -17,7 +33,7 @@ document.querySelector('.lenguage div').addEventListener('click', function () {
     });
 });
 
-// Efeito de troca de idioma
+
 const btnPt = document.getElementById('btn-pt');
 const btnEn = document.getElementById('btn-en');
 const pt = document.querySelectorAll('[data-lang="pt"]');
@@ -42,7 +58,7 @@ btnEn.addEventListener('click', () => {
     });
 });
 
-        // Modal: Atividades
+
 const iconesAtividades = document.getElementById('iconesAtividades');
 const modalAtividades = document.getElementById('modalAtividades');
 const fecharModalAtividades = document.getElementById('fecharModalAtividades');
@@ -54,7 +70,7 @@ fecharModalAtividades.addEventListener('click', () => {
     modalAtividades.style.display = 'none';
 });
 
-// Modal: IMC
+
 const iconesIMC = document.getElementById('iconesIMC');
 const modalIMC = document.getElementById('modalIMC');
 const fecharModalIMC = document.getElementById('fecharModalIMC');
@@ -66,7 +82,7 @@ fecharModalIMC.addEventListener('click', () => {
     modalIMC.style.display = 'none';
 });
 
-// Modal: Progresso
+
 const iconesProgresso = document.getElementById('iconesProgresso');
 const modalProgresso = document.getElementById('modalProgresso');
 const fecharModalProgresso = document.getElementById('fecharModalProgresso');

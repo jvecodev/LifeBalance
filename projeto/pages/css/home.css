@@ -56,7 +56,7 @@ body {
 ::-webkit-scrollbar-thumb {
     background-color: #007BFF;
     border-radius: 10px;
-    border: 3px solid #333333;
+    border: 2px solid #333333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -110,7 +110,7 @@ nav{
     color: #ffffff;
     font-family: var(--font-text);
     font-weight: normal;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .menu a:hover {
@@ -166,9 +166,6 @@ nav{
     margin: 0;
 }
 
-.hamburguer {
-    display: none;
-}
 
 /* Estilo principal da seção "Sobre" */
 .about {
@@ -200,7 +197,7 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+   
     flex-direction: row;
     margin-top: 100px;
     
@@ -227,11 +224,11 @@ nav{
     align-items: center;
     margin-top: 100px;
     flex-direction: column;
-    flex: 1;
+    
 }
 
 .sobreLife > .img {
-    flex: 1;
+    
     margin-top: 0%;
     margin-left: 0%;
     padding: 0%;
@@ -346,7 +343,7 @@ hr {
     margin-right: 10px;
     border-radius: 20px;
     gap: 100px;
-    border: #007BFF 2px solid;
+    border: #ffffff9c 2px solid;
 }
 
 form {
@@ -392,25 +389,18 @@ input::placeholder {
 
 /* Estilo do botão */
 .btn {
-    width: 50%;
-    height: 100%;
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    border: #007BFF 2px solid;
-    background-color: #007bff56;
-    border-radius: 20px;
-    padding: 200px 0px;
-    border-end-start-radius: 200px;
-    border-top-left-radius: 200px;
-    border-bottom-right-radius: 20px;
-    border-top-right-radius: 20px;
+    
+    
 }
 
 
 .btn button {
     padding: 5px;
-    background-color: #007bff00;
+    background-color: #007bff9c;
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -498,37 +488,8 @@ input::placeholder {
     border: #007BFF 2px solid;
     scale: 1.005;
 }
-/* Responsividade */
-@media (max-width: 768px) {
-    .hamburguer {
-        display: block;
-    }
 
-    .menu {
-        display: none;
-        flex-direction: column;
-    }
 
-    .menu.active {
-        display: flex;
-    }
-
-    .menu .list {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .conteudo {
-        flex-direction: column;
-    }
-
-    .imagem, .container {
-        flex: 1 100%;
-        height: auto;
-    }
-}
-
-* Estilo do footer */
 .social {
     padding: 40px 20px;
     text-align: center;
@@ -563,17 +524,6 @@ input::placeholder {
     color: #007BFF;
 }
 
-/* Ajuste do tamanho para telas menores */
-@media (max-width: 768px) {
-    .social h1 {
-        font-size: 20px;
-    }
-
-    .social .icons a {
-        font-size: 28px;
-    }
-}
-
 .footer-container {
     display: flex;
     justify-content: center; 
@@ -594,5 +544,4 @@ input::placeholder {
     border: #007BFF 2px solid;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
-
 

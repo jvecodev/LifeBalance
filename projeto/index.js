@@ -4,30 +4,30 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'; 
 
-dotenv.config(); // Carrega as variáveis de ambiente
+dotenv.config(); 
 
 const app = express();
 app.use(express.json()); 
 app.use(express.static('./pages'));
 
-// Conexão com o banco de dados (uso de async/await)
+
 const DATABASE_URL = process.env.DATABASE_URL;
 
 async function verificarConexao() {
     try {
         const connection = await mysql.createConnection(DATABASE_URL);
-        await connection.query('SELECT 1');  // Consulta simples para verificar a conexão
+        await connection.query('SELECT 1');  
         console.log('Conexão bem-sucedida ao banco de dados!');
         return connection;
     } catch (err) {
         console.error('Erro ao conectar ao banco de dados:', err);
-        process.exit(1);  // Encerra o servidor em caso de erro na conexão com o banco
+        process.exit(1); 
     }
 }
 
-const connection = await verificarConexao();  // Chama a função para verificar a conexão
+const connection = await verificarConexao(); 
 
-// Middleware de autenticação de token
+
 function autenticarToken(req, res, next) {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
@@ -35,9 +35,9 @@ function autenticarToken(req, res, next) {
     }
 
     try {
-        // Verifica o token usando o segredo definido no .env
+ 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Decodifica e adiciona o usuário ao request
+        req.user = decoded;
         next();
     } catch (error) {
         console.error('Erro ao verificar token:', error);
@@ -45,7 +45,7 @@ function autenticarToken(req, res, next) {
     }
 }
 
-// Endpoint para buscar o perfil do usuário
+
 app.get('/api/perfil', async (req, res) => {
     try {
         const query = 'SELECT nome, email FROM Usuario ORDER BY id_usuario DESC LIMIT 1';
@@ -71,7 +71,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
     try {
         const { nome, email, senha } = req.body;
 
-        // Atualizar apenas nome e email
+      
         if (!senha) {
             const [usuarioAtualizado] = await connection.query(
                 'UPDATE Usuario SET nome = ?, email = ? WHERE id_usuario = ?',
@@ -85,7 +85,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
             }
         }
 
-        // Caso a senha esteja presente, criptografá-la e atualizar apenas a senha
+      
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
@@ -120,7 +120,7 @@ app.get('/api/cadastrar', async (req, res) => {
 });
 
 
-// Endpoint para cadastrar um novo usuário
+
 app.post('/api/cadastrar', async (req, res) => {
     const { nome, email, senha } = req.body;
 
@@ -141,7 +141,7 @@ app.post('/api/cadastrar', async (req, res) => {
     }
 });
 
-// Endpoint para login
+
 app.post('/api/login', async (req, res) => {
     const { email, senha } = req.body;
 
@@ -212,14 +212,14 @@ app.delete('/api/metas/:id_meta', autenticarToken, async (req, res) => {
     const { id_meta } = req.params;
 
     try {
-        // Verifica se a meta pertence ao usuário
+        
         const [meta] = await connection.query('SELECT * FROM Metas WHERE id_meta = ? AND id_usuario = ?', [id_meta, req.user.id_usuario]);
 
         if (meta.length === 0) {
             return res.status(404).json({ message: 'Meta não encontrada ou não pertence ao usuário' });
         }
 
-        const deleteQuery = 'DELETE FROM Metas WHERE id_meta = ?';  // Corrigir o nome do campo para 'id_meta'
+        const deleteQuery = 'DELETE FROM Metas WHERE id_meta = ?'; 
         await connection.query(deleteQuery, [id_meta]);
 
         res.status(200).json({ message: 'Meta concluída e removida com sucesso' });
@@ -229,7 +229,7 @@ app.delete('/api/metas/:id_meta', autenticarToken, async (req, res) => {
     }
 });
 
-// Rota para usuario_caract
+
 
 
 
@@ -272,14 +272,13 @@ app.post('/api/atividades', autenticarToken, async (req, res) => {
 
 app.get('/api/atividades', autenticarToken, async (req, res) => {
     try {
-        // Pegando o id do usuário do token
+    
         const idUsuario = req.user.id_usuario;
 
-        // Consultando as atividades no banco de dados
         const query = 'SELECT * FROM Atividades WHERE id_usuario = ?';
         const [atividades] = await connection.query(query, [idUsuario]);
 
-        // Verificando se há atividades e respondendo com os dados
+       
         if (atividades.length === 0) {
             return res.status(200).json({ atividades: [] });
         }
@@ -295,7 +294,7 @@ app.get('/api/atividades-mensais', autenticarToken, async (req, res) => {
     try {
         const idUsuario = req.user.id_usuario;
 
-        // Consultando a contagem de atividades por mês
+     
         const query = `
             SELECT atividade, COUNT(*) as total
             FROM Atividades

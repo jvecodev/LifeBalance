@@ -1,0 +1,199 @@
+
+
+@media screen and (max-width: 908px) {
+    /* Corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    
+    height: 100vh;
+    background-color: #010101;
+    background-image: url('../img/gym.jpg');
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+    
+    ::-webkit-scrollbar {
+       display: none;
+    }
+
+    .lenguage button {
+        width: 20px;
+        height: 20px;
+        margin-left: 5px;
+        
+        
+    }
+
+    .hamburguer {
+        display: block;
+        z-index: 200;
+    }
+
+    .lenguage p {
+        color: #ffffff;
+        font-family: var(--font-text);
+        font-weight: bold;
+        font-size: 16px;
+    }
+    
+    
+    .lenguage > div > img{
+        margin: 0px 0px 0px 20px;
+        background-color: #ffffff;
+        border-radius: 20%;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .lenguage > div > img:hover {
+        transition: 0.8s;
+        scale: 1.05;
+    }
+    
+    
+
+    .list {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #7a7a7a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+    }
+
+    .menu.active .list {
+        transform: translateX(0);
+    }
+
+    .list li {
+        margin: 1rem 0;
+    }
+
+    .list li a {
+        color: #fff;
+        font-size: 1.2rem;
+        text-decoration: none;
+    }
+
+    /* Estilo da seção conteúdo */
+    .conteudo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        margin-top: 300px;
+        
+    }
+
+    form {
+       
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .text {
+        
+        color: #ffffff;
+        font-family: var(--font-text);
+        flex-direction: column;
+        margin-left: 0px;
+        margin-bottom: 100px;
+    }
+
+    .text h1 {
+        font-size: 60px;
+        
+    }
+    .text h2 {
+        font-size: 25px;
+        text-align: center;
+        margin-top: 20px;
+        font-family: var(--font-text);
+    }
+
+    /* Formulário de cadastro */
+    .container {
+        border: none;
+        padding: 10px;
+        margin: 0 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        
+    }
+
+    .btn {
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 50px;
+    }
+    
+    .btn button {
+        padding: 5px;
+        background-color: #007bff00;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: var(--font-text);
+    }
+
+    .servico{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        width: 80%;
+    }
+
+    .servico p{
+        text-align: center;
+    }
+
+    
+
+    hr{
+        width: 90%;
+        border: 1px solid #ffffff;
+        margin-top: 50px;
+    }
+
+
+}
+
+.hamburguer {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block;
+    
+}
+
+.hamburguer i {
+    font-size: 1.5rem;
+    color: #b8b8b8;
+
+}
+
+

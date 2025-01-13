@@ -94,7 +94,8 @@ nav{
     color: #ffffff;
     font-family: var(--font-text);
     font-weight: normal;
-    font-size: 18px;
+    font-size: 15px;
+
 }
 
 .menu a:hover {

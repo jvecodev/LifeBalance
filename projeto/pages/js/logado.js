@@ -13,16 +13,16 @@ const msgMetas = document.getElementById('msg-mestas');
 
 btnMetas.addEventListener('click', () => {
     console.log('Botão de determinar objetivo clicado');
-    formMetas.style.display = 'block'; // Mostra o formulário
-    msgMetas.innerHTML = ''; // Limpa mensagens anteriores
+    formMetas.style.display = 'block';
+    msgMetas.innerHTML = ''; 
 });
 
 
 
-// Função para cancelar o registro de metas
+
 cancelarMetas.addEventListener('click', (event) => {
-    event.preventDefault(); // Previne comportamento padrão do botão
-    formMetas.style.display = 'none'; // Fecha o formulário
+    event.preventDefault();
+    formMetas.style.display = 'none'; 
     
 });
 
@@ -90,33 +90,33 @@ registrarMetas.addEventListener('click', (event) => {
 
 btnMetas.addEventListener('click', () => {
     console.log('Botão de determinar objetivo clicado');
-    formMetas.style.display = 'block'; // Mostra o formulário
-    msgMetas.innerHTML = ''; // Limpa mensagens anteriores
+    formMetas.style.display = 'block'; 
+    msgMetas.innerHTML = '';
 });
 
 
 
-// Função para cancelar o registro de metas
+
 cancelarMetas.addEventListener('click', (event) => {
-    event.preventDefault(); // Previne comportamento padrão do botão
-    formMetas.style.display = 'none'; // Fecha o formulário
+    event.preventDefault();
+    formMetas.style.display = 'none'; 
     
 });
 
 
-// Função para obter as metas cadastradas e exibi-las
+
 function exibirMetas() {
     fetch('/api/metas', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Coloque o token de autenticação aqui
+            'Authorization': `Bearer ${token}`, 
         },
     })
     .then(response => response.json())
     .then(data => {
-        const metasContainer = document.getElementById('metascontainer'); // Onde as metas serão exibidas
-        metasContainer.innerHTML = ''; // Limpa as metas anteriores
+        const metasContainer = document.getElementById('metascontainer'); 
+        metasContainer.innerHTML = '';
 
         data.metas.forEach(meta => {
             const metaElement = document.createElement('div');
@@ -163,7 +163,7 @@ function concluirMeta(metaId, event) {
             throw new Error('Erro ao excluir meta');
         }
         console.log('Meta concluída com sucesso');
-        exibirMetas(); // Atualiza a lista de metas
+        exibirMetas(); 
     })
     .catch(error => {
         console.error('Erro ao excluir meta:', error);
@@ -225,7 +225,6 @@ document.querySelectorAll('ul a').forEach(anchor => {
 });
 });
 
-// registrar imc 
 
 const formImc = document.getElementById('form-imc');
 const resultado = document.getElementById('resultado');
@@ -252,7 +251,7 @@ registrarImc.addEventListener('click', (event) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Certifique-se de que o token está definido
+            'Authorization': `Bearer ${token}`, 
         },
         body: JSON.stringify(imc),
     })
@@ -332,22 +331,22 @@ document.getElementById('registrarAtividade').addEventListener('click', (event) 
 });
 
 function verificarMudancaDeMes() {
-    const mesAtual = new Date().getMonth(); // Mês atual
+    const mesAtual = new Date().getMonth();
 
-    // Verificar se o mês foi alterado
+   
     if (mesAtual !== localStorage.getItem('ultimoMes')) {
-        localStorage.setItem('ultimoMes', mesAtual); // Salvar o mês atual
-        atualizarListaAtividades(); // Atualizar a lista de atividades
+        localStorage.setItem('ultimoMes', mesAtual); 
+        atualizarListaAtividades(); 
     }
 }
 
-// Chama a função de verificação de mudança de mês a cada 24 horas
+
 setInterval(verificarMudancaDeMes, 24 * 60 * 60 * 1000);
 
-// Inicializa com a verificação
+
 document.addEventListener('DOMContentLoaded', () => {
     if (!localStorage.getItem('ultimoMes')) {
-        localStorage.setItem('ultimoMes', new Date().getMonth()); // Salvar o primeiro mês
+        localStorage.setItem('ultimoMes', new Date().getMonth());
     }
     atualizarListaAtividades();
 });
@@ -356,14 +355,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function atualizarListaAtividades() {
     fetch('/api/atividades', {
         headers: {
-            'Authorization': `Bearer ${token}`, // Substituir por token real
+            'Authorization': `Bearer ${token}`, 
         },
     })
     .then(response => response.json())
     .then(data => {
         const atividades = data.atividades;
 
-        // Agrupar atividades por tipo para contar ocorrências
+      
         const contador = {};
         atividades.forEach(atividade => {
             const mesAtividade = new Date(atividade.data_treino).getMonth();
@@ -373,7 +372,7 @@ function atualizarListaAtividades() {
             }
         });
 
-        // Exibir o resumo do mês
+     
         const resumoMes = document.getElementById('resumo-mes');
         const mesAtual = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
         resumoMes.innerHTML = `<h3>Atividades de ${mesAtual}</h3>`;
@@ -387,7 +386,7 @@ function atualizarListaAtividades() {
             resumoMes.innerHTML += `<div class="contador-atividades">${contadorHtml}</div>`;
         }
 
-        // Exibir a lista de atividades
+       
         const listaAtividades = document.getElementById('lista-atividades');
         listaAtividades.innerHTML = '';
 
@@ -414,11 +413,11 @@ function atualizarListaAtividades() {
     .catch(error => console.error('Erro ao atualizar lista de atividades:', error));
 }
 
-// Atualizar lista quando a página for carregada
+
 document.addEventListener('DOMContentLoaded', () => {
     atualizarListaAtividades();
 });
-// Atualizar lista quando a página for carregada
+
 document.addEventListener('DOMContentLoaded', () => {
     atualizarListaAtividades();
 });
@@ -452,29 +451,29 @@ function atualizarContagemMensal() {
         .catch(error => console.error('Erro ao buscar contagem mensal:', error));
 }
 
-// Exibir contagem ao carregar a página
+
 document.addEventListener('DOMContentLoaded', atualizarContagemMensal);
 
 
-let ultimoMes = new Date().getMonth(); // Mês atual
+let ultimoMes = new Date().getMonth();
 
 const coresSemana = [
-    'rgba(54, 162, 235, 0.6)', // Semana 1
-    'rgba(255, 99, 132, 0.6)', // Semana 2
-    'rgba(75, 192, 192, 0.6)', // Semana 3
-    'rgba(153, 102, 255, 0.6)' // Semana 4
+    'rgba(54, 162, 235, 0.6)', 
+    'rgba(255, 99, 132, 0.6)', 
+    'rgba(75, 192, 192, 0.6)', 
+    'rgba(153, 102, 255, 0.6)' 
 ];
 
 function verificarMudancaDeMes() {
     const mesAtual = new Date().getMonth();
     if (mesAtual !== ultimoMes) {
         ultimoMes = mesAtual;
-        resetarGrafico(); // Resetar gráficos quando mudar o mês
+        resetarGrafico(); 
     }
 }
 
 function resetarGrafico() {
-    // Reseta os dados dos gráficos
+    
     chartSemana.data.datasets[0].data = [0, 0, 0, 0];
     chartSemana.update();
     chartMes.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -482,49 +481,47 @@ function resetarGrafico() {
 }
 
 function calcularSemanaDoMes(data) {
-    const primeiroDiaDoMes = new Date(data.getFullYear(), data.getMonth(), 1); // Primeiro dia do mês
-    const ultimoDiaDoMes = new Date(data.getFullYear(), data.getMonth() + 1, 0); // Último dia do mês
+    const primeiroDiaDoMes = new Date(data.getFullYear(), data.getMonth(), 1); 
+    const ultimoDiaDoMes = new Date(data.getFullYear(), data.getMonth() + 1, 0)
 
-    // Calcular a diferença em dias
+   
     const diffTime = data - primeiroDiaDoMes;
-    const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Converter para dias
+    const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
 
-    // Determinar o total de dias no mês
+  
     const totalDiasNoMes = Math.floor((ultimoDiaDoMes - primeiroDiaDoMes) / (1000 * 60 * 60 * 24));
 
-    // Calcular qual semana do mês
+   
     const semana = Math.floor(dias / 7);
     if (semana >= 4) {
-        return 3; // Considerar tudo após a 3ª semana como a última
+        return 3; 
     }
     return semana;
 }
 
-// Função para contar as atividades por semana (últimas 4 semanas)
 function contarAtividadesPorSemana(atividades) {
-    const semanas = [0, 0, 0, 0]; // Contagem para as 4 últimas semanas
+    const semanas = [0, 0, 0, 0]; 
     atividades.forEach(atividade => {
         const dataAtividade = new Date(atividade.data_treino);
         const semana = calcularSemanaDoMes(dataAtividade);
         if (semana >= 0 && semana < 4) {
-            semanas[semana] += 1; // Incrementa a contagem da semana correspondente
+            semanas[semana] += 1;
         }
     });
     return semanas;
 }
 
-// Função para contar as atividades por mês
 function contarAtividadesPorMes(atividades) {
-    const meses = new Array(12).fill(0); // Contagem para os 12 meses
+    const meses = new Array(12).fill(0); 
     atividades.forEach(atividade => {
         const dataAtividade = new Date(atividade.data_treino);
-        const mes = dataAtividade.getMonth(); // 0 é Janeiro, 1 é Fevereiro, etc.
-        meses[mes] += 1; // Incrementa a contagem do mês correspondente
+        const mes = dataAtividade.getMonth(); 
+        meses[mes] += 1; 
     });
     return meses;
 }
 
-// Função para atualizar gráficos gerais de mês e semana
+
 function atualizarGraficoGerais() {
     fetch('/api/atividades', {
         method: 'GET',
@@ -539,10 +536,10 @@ function atualizarGraficoGerais() {
         const atividadesPorSemana = contarAtividadesPorSemana(atividades);
         const atividadesPorMes = contarAtividadesPorMes(atividades);
 
-        // Atualizando os gráficos de atividades por semana
+       
         atualizarGraficoSemana(atividadesPorSemana);
 
-        // Atualizando os gráficos de atividades por mês
+       
         chartMes.data.datasets[0].data = atividadesPorMes;
         chartMes.update();
     })
@@ -554,7 +551,7 @@ function atualizarGraficoGerais() {
 function atualizarGraficoSemana(atividadesPorSemana) {
     chartSemana.data.datasets[0].data = atividadesPorSemana;
 
-    // Aplicando cores diferentes para cada semana
+   
     atividadesPorSemana.forEach((_, index) => {
         chartSemana.data.datasets[0].backgroundColor[index] = coresSemana[index];
     });
@@ -566,15 +563,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctxSemana = document.getElementById('graficoSemana').getContext('2d');
     const ctxMes = document.getElementById('graficoMes').getContext('2d');
 
-    // Inicializando os gráficos
     chartSemana = new Chart(ctxSemana, {
         type: 'bar',
         data: {
             labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
             datasets: [{
                 label: 'Atividades Realizadas',
-                data: [0, 0, 0, 0], // Inicialmente sem dados
-                backgroundColor: coresSemana, // Usar o array de cores diferentes
+                data: [0, 0, 0, 0], 
+                backgroundColor: coresSemana,
                 borderColor: coresSemana,
                 borderWidth: 1
             }]
@@ -593,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 label: 'Atividades Realizadas',
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Inicialmente sem dados
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
                 backgroundColor: 'rgba(255, 0, 55, 0.6)',
                 borderColor: 'rgb(255, 0, 55)',
                 borderWidth: 1
@@ -607,10 +603,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Carregar gráficos de atividades gerais (por semana e por mês)
+   
     atualizarGraficoGerais();
 
-    // Verificar mudança de mês a cada carregamento ou intervalo
+    
     verificarMudancaDeMes();
 });
 
@@ -630,7 +626,7 @@ setInterval(() => {
 
 
 
-// Efeito de rolagem para o topo do site 
+
 document.querySelector('.lenguage div').addEventListener('click', function () {
     window.scrollTo({
         top: 0,
