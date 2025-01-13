@@ -291,62 +291,23 @@ app.get('/api/atividades', autenticarToken, async (req, res) => {
     }
 });
 
-app.get('/api/atividades-contagem', autenticarToken, async (req, res) => {
+app.get('/api/atividades-mensais', autenticarToken, async (req, res) => {
     try {
-        const { tipo, periodo } = req.query;
         const idUsuario = req.user.id_usuario;
 
-        let query = '';
-        let params = [idUsuario];
+        // Consultando a contagem de atividades por mês
+        const query = `
+            SELECT atividade, COUNT(*) as total
+            FROM Atividades
+            WHERE id_usuario = ? AND MONTH(data_treino) = MONTH(CURRENT_DATE()) AND YEAR(data_treino) = YEAR(CURRENT_DATE())
+            GROUP BY atividade
+        `;
+        const [resultados] = await connection.query(query, [idUsuario]);
 
-        if (periodo === 'semana') {
-            query = `
-                SELECT atividade, COUNT(*) AS contagem
-                FROM Atividades
-                WHERE id_usuario = ? AND WEEK(data_treino) = WEEK(CURRENT_DATE)
-                GROUP BY atividade
-            `;
-        } else if (periodo === 'mes') {
-            query = `
-                SELECT atividade, COUNT(*) AS contagem
-                FROM Atividades
-                WHERE id_usuario = ? AND MONTH(data_treino) = MONTH(CURRENT_DATE)
-                GROUP BY atividade
-            `;
-        }
-
-        // Se o tipo foi passado, incluímos na consulta
-        if (tipo) {
-            query += ' AND atividade = ?';
-            params.push(tipo);
-        }
-
-        const [resultados] = await connection.query(query, params);
-
-        if (resultados.length === 0) {
-            return res.status(200).json({ atividades: [] });
-        }
-
-        // Garantir que a resposta esteja no formato esperado
-        const atividadesPorTipo = {
-            musculacao: 0,
-            ciclismo: 0,
-            corrida: 0,
-            natacao: 0,
-            outro: 0
-        };
-
-        // Preencher a contagem de atividades
-        resultados.forEach(item => {
-            if (atividadesPorTipo.hasOwnProperty(item.atividade)) {
-                atividadesPorTipo[item.atividade] = item.contagem;
-            }
-        });
-
-        return res.status(200).json({ atividades: atividadesPorTipo });
+        res.status(200).json({ atividadesMensais: resultados });
     } catch (error) {
-        console.error('Erro ao contar atividades:', error);
-        res.status(500).json({ message: 'Erro ao contar atividades' });
+        console.error('Erro ao buscar contagem mensal:', error);
+        res.status(500).json({ message: 'Erro ao buscar contagem mensal' });
     }
 });
 

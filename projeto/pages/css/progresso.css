@@ -121,8 +121,11 @@
     height: 100vh;
     padding: 20px;
     flex-direction: column;
-    background-color: #000000;
+    background-color: #ffffff;
     color: white;
+    width: 100%;
+    margin-bottom: 50px;
+    
     
 }
 
@@ -247,9 +250,10 @@ label {
 
 
 .grafico-container {
-    width: 80%; 
+    width: 50%; 
     max-width: 1000px; 
-    margin: 0 auto; 
+    margin: 0 auto;
+    margin-bottom: 50px;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 10px; 
@@ -274,7 +278,7 @@ label {
 }
 
 .grafico-container::after {
-    content: "Carregando gráfico...";
+    content: "Carregando ";
     font-size: 16px;
     color: #888;
     display: block;
@@ -282,15 +286,100 @@ label {
     margin-top: 50px;
 }
 
-.grafico-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-}
+
 
 canvas {
     width: 100%;
     height: 400px;
+    max-width: 100%;
+    height: 400px;
+}
+ 
+.resumo-mes {
+    font-weight: normal;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #e3f2fd;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.resumo-mes p{
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    
+    padding: 10px;
+}
+
+.resumo-mes h3 {
+    margin-bottom: 10px;
+}
+
+.contador-atividades {
+    margin-top: 10px;
+    font-weight: normal;
+}
+.lista-atividades {
+    margin-top: 0px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    
+
+}
+
+.atividade-item {
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    flex-direction: column;
+    width: 98%;
+    border-radius: 20px;
+
+}
+
+.atividade-item:last-child {
+    border-bottom: none;
+}
+
+.atividade-item p {
+    margin-top: 30px;
+    font-weight: normal;
 }
 
 
+.activity-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.activity-images img {
+    
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.activity-images img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.5s;
+}

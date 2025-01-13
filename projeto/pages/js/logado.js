@@ -311,7 +311,6 @@ document.getElementById('registrarAtividade').addEventListener('click', (event) 
         data_treino: data,
     };
 
-    // Enviar a nova atividade para o backend
     fetch('/api/atividades', {
         method: 'POST',
         headers: {
@@ -320,24 +319,185 @@ document.getElementById('registrarAtividade').addEventListener('click', (event) 
         },
         body: JSON.stringify(atividadeObj),
     })
-    .then(response => response.json())
-    .then(() => {
-        console.log('Atividade registrada com sucesso');
-
-            atualizarGraficoGerais(); // Atualiza gráficos gerais (por semana e por mês)
-            atualizarGraficoAtividades(atividade, 'semana'); 
-            
-    })
-    .catch(error => {
-        console.error('Erro ao registrar atividade:', error);
-    });
+        .then(response => response.json())
+        .then(() => {
+            console.log('Atividade registrada com sucesso');
+            atualizarListaAtividades();
+            atualizarGraficoGerais();
+           
+        })
+        .catch(error => {
+            console.error('Erro ao registrar atividade:', error);
+        });
 });
-// Função para calcular a semana do mês para uma data específica
+
+function verificarMudancaDeMes() {
+    const mesAtual = new Date().getMonth(); // Mês atual
+
+    // Verificar se o mês foi alterado
+    if (mesAtual !== localStorage.getItem('ultimoMes')) {
+        localStorage.setItem('ultimoMes', mesAtual); // Salvar o mês atual
+        atualizarListaAtividades(); // Atualizar a lista de atividades
+    }
+}
+
+// Chama a função de verificação de mudança de mês a cada 24 horas
+setInterval(verificarMudancaDeMes, 24 * 60 * 60 * 1000);
+
+// Inicializa com a verificação
+document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('ultimoMes')) {
+        localStorage.setItem('ultimoMes', new Date().getMonth()); // Salvar o primeiro mês
+    }
+    atualizarListaAtividades();
+});
+
+
+function atualizarListaAtividades() {
+    fetch('/api/atividades', {
+        headers: {
+            'Authorization': `Bearer ${token}`, // Substituir por token real
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        const atividades = data.atividades;
+
+        // Agrupar atividades por tipo para contar ocorrências
+        const contador = {};
+        atividades.forEach(atividade => {
+            const mesAtividade = new Date(atividade.data_treino).getMonth();
+            const mesAtual = new Date().getMonth();
+            if (mesAtividade === mesAtual) {
+                contador[atividade.atividade] = (contador[atividade.atividade] || 0) + 1;
+            }
+        });
+
+        // Exibir o resumo do mês
+        const resumoMes = document.getElementById('resumo-mes');
+        const mesAtual = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+        resumoMes.innerHTML = `<h3>Atividades de ${mesAtual}</h3>`;
+
+        if (Object.keys(contador).length === 0) {
+            resumoMes.innerHTML += '<p>Nenhuma atividade realizada neste mês.</p>';
+        } else {
+            const contadorHtml = Object.entries(contador)
+                .map(([atividade, total]) => `<p><strong>${atividade}:</strong> ${total} vez(es)</p>`)
+                .join('');
+            resumoMes.innerHTML += `<div class="contador-atividades">${contadorHtml}</div>`;
+        }
+
+        // Exibir a lista de atividades
+        const listaAtividades = document.getElementById('lista-atividades');
+        listaAtividades.innerHTML = '';
+
+        const atividadesDoMes = atividades.filter(atividade => {
+            const mesAtividade = new Date(atividade.data_treino).getMonth();
+            return mesAtividade === new Date().getMonth();
+        });
+
+        if (atividadesDoMes.length === 0) {
+            listaAtividades.innerHTML = '<p>Nenhuma atividade registrada neste mês.</p>';
+            return;
+        }
+
+        atividadesDoMes.forEach(atividade => {
+            const atividadeElemento = document.createElement('div');
+            atividadeElemento.classList.add('atividade-item');
+            atividadeElemento.innerHTML = `
+                <p><strong>Atividade:</strong> ${atividade.atividade}</p>
+                <p><strong>Data:</strong> ${new Date(atividade.data_treino).toLocaleDateString()}</p>
+            `;
+            listaAtividades.appendChild(atividadeElemento);
+        });
+    })
+    .catch(error => console.error('Erro ao atualizar lista de atividades:', error));
+}
+
+// Atualizar lista quando a página for carregada
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarListaAtividades();
+});
+// Atualizar lista quando a página for carregada
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarListaAtividades();
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarListaAtividades();
+});
+
+
+document.addEventListener('DOMContentLoaded', atualizarListaAtividades);
+function atualizarContagemMensal() {
+    fetch('/api/atividades-mensais', {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const contagem = document.getElementById('contagem-mensal');
+            contagem.innerHTML = '';
+
+            data.atividadesMensais.forEach(item => {
+                const linha = document.createElement('p');
+                linha.textContent = `${item.atividade}: ${item.total} vezes`;
+                contagem.appendChild(linha);
+            });
+        })
+        .catch(error => console.error('Erro ao buscar contagem mensal:', error));
+}
+
+// Exibir contagem ao carregar a página
+document.addEventListener('DOMContentLoaded', atualizarContagemMensal);
+
+
+let ultimoMes = new Date().getMonth(); // Mês atual
+
+const coresSemana = [
+    'rgba(54, 162, 235, 0.6)', // Semana 1
+    'rgba(255, 99, 132, 0.6)', // Semana 2
+    'rgba(75, 192, 192, 0.6)', // Semana 3
+    'rgba(153, 102, 255, 0.6)' // Semana 4
+];
+
+function verificarMudancaDeMes() {
+    const mesAtual = new Date().getMonth();
+    if (mesAtual !== ultimoMes) {
+        ultimoMes = mesAtual;
+        resetarGrafico(); // Resetar gráficos quando mudar o mês
+    }
+}
+
+function resetarGrafico() {
+    // Reseta os dados dos gráficos
+    chartSemana.data.datasets[0].data = [0, 0, 0, 0];
+    chartSemana.update();
+    chartMes.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    chartMes.update();
+}
+
 function calcularSemanaDoMes(data) {
     const primeiroDiaDoMes = new Date(data.getFullYear(), data.getMonth(), 1); // Primeiro dia do mês
-    const diffTime = data - primeiroDiaDoMes; // Diferença em milissegundos
-    const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convertendo para dias
-    return Math.floor(dias / 7); // Dividido por 7 para encontrar a semana
+    const ultimoDiaDoMes = new Date(data.getFullYear(), data.getMonth() + 1, 0); // Último dia do mês
+
+    // Calcular a diferença em dias
+    const diffTime = data - primeiroDiaDoMes;
+    const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Converter para dias
+
+    // Determinar o total de dias no mês
+    const totalDiasNoMes = Math.floor((ultimoDiaDoMes - primeiroDiaDoMes) / (1000 * 60 * 60 * 24));
+
+    // Calcular qual semana do mês
+    const semana = Math.floor(dias / 7);
+    if (semana >= 4) {
+        return 3; // Considerar tudo após a 3ª semana como a última
+    }
+    return semana;
 }
 
 // Função para contar as atividades por semana (últimas 4 semanas)
@@ -364,7 +524,6 @@ function contarAtividadesPorMes(atividades) {
     return meses;
 }
 
-
 // Função para atualizar gráficos gerais de mês e semana
 function atualizarGraficoGerais() {
     fetch('/api/atividades', {
@@ -377,12 +536,11 @@ function atualizarGraficoGerais() {
     .then(data => {
         const atividades = data.atividades;
 
-        const atividadesPorSemana = contarAtividadesPorSemana(atividades); 
-        const atividadesPorMes = contarAtividadesPorMes(atividades); 
+        const atividadesPorSemana = contarAtividadesPorSemana(atividades);
+        const atividadesPorMes = contarAtividadesPorMes(atividades);
 
         // Atualizando os gráficos de atividades por semana
-        chartSemana.data.datasets[0].data = atividadesPorSemana;
-        chartSemana.update();
+        atualizarGraficoSemana(atividadesPorSemana);
 
         // Atualizando os gráficos de atividades por mês
         chartMes.data.datasets[0].data = atividadesPorMes;
@@ -393,55 +551,16 @@ function atualizarGraficoGerais() {
     });
 }
 
-function atualizarGraficoAtividades(tipo, periodo) {
-    fetch(`/api/atividades-contagem?tipo=${tipo}&periodo=${periodo}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        const atividadesPorTipo = data.atividades; // Agora 'atividades' é um objeto com as contagens
+function atualizarGraficoSemana(atividadesPorSemana) {
+    chartSemana.data.datasets[0].data = atividadesPorSemana;
 
-        const labels = Object.keys(atividadesPorTipo);
-        const dataValues = Object.values(atividadesPorTipo);
-
-        // Atualizar o gráfico de atividades por tipo
-        const ctxAtividades = document.getElementById('graficoAtividades').getContext('2d');
-        
-        // Se o gráfico já foi inicializado, apenas atualize os dados
-        if (window.chartAtividades) {
-            window.chartAtividades.data.datasets[0].data = dataValues;
-            window.chartAtividades.update();
-        } else {
-            // Inicializando o gráfico de atividades por tipo
-            window.chartAtividades = new Chart(ctxAtividades, {
-                type: 'bar',
-                data: {
-                    labels: ['ciclismo', 'musculacao', 'corrida', 'natacao', 'outros'],
-                    datasets: [{
-                        label: 'Contagem de Atividades',
-                        data: dataValues,
-                        backgroundColor: 'rgba(54, 235, 54, 0.6)',
-                        borderColor: 'rgba(54, 235, 54, 0.6)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao obter contagem de atividades:', error);
+    // Aplicando cores diferentes para cada semana
+    atividadesPorSemana.forEach((_, index) => {
+        chartSemana.data.datasets[0].backgroundColor[index] = coresSemana[index];
     });
-}
 
+    chartSemana.update();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const ctxSemana = document.getElementById('graficoSemana').getContext('2d');
@@ -455,8 +574,8 @@ document.addEventListener('DOMContentLoaded', () => {
             datasets: [{
                 label: 'Atividades Realizadas',
                 data: [0, 0, 0, 0], // Inicialmente sem dados
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: coresSemana, // Usar o array de cores diferentes
+                borderColor: coresSemana,
                 borderWidth: 1
             }]
         },
@@ -471,14 +590,12 @@ document.addEventListener('DOMContentLoaded', () => {
     chartMes = new Chart(ctxMes, {
         type: 'bar',
         data: {
-            labels: [
-                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-            ],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 label: 'Atividades Realizadas',
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Inicialmente sem dados
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 0, 55, 0.6)',
+                borderColor: 'rgb(255, 0, 55)',
                 borderWidth: 1
             }]
         },
@@ -493,9 +610,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carregar gráficos de atividades gerais (por semana e por mês)
     atualizarGraficoGerais();
 
-    // Exemplo para carregar contagem de musculação por semana
-    atualizarGraficoAtividades('musculacao', 'semana');
+    // Verificar mudança de mês a cada carregamento ou intervalo
+    verificarMudancaDeMes();
 });
+
+
+let mesAtual = new Date().getMonth();
+
+setInterval(() => {
+    const novoMes = new Date().getMonth();
+    if (novoMes !== mesAtual) {
+        mesAtual = novoMes;
+        atualizarListaAtividades();
+        atualizarContagemMensal();
+        atualizarGraficoGerais();
+        
+    }
+}, 3600000); 
+
+
 
 // Efeito de rolagem para o topo do site 
 document.querySelector('.lenguage div').addEventListener('click', function () {
