@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             console.log('Conta excluída com sucesso:', data);
             localStorage.removeItem('token');
-            window.open('lifeBalance.html', '_self');
+            window.open('index.html', '_self');
         })
         .catch(error => {
             console.error('Erro ao excluir a conta:', error);
