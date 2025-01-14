@@ -15,7 +15,7 @@ app.use(express.static('./pages'));
 app.use(cors());
 
 app.use(cors({
-    origin: 'https://seu-projeto.vercel.app', 
+    origin: 'https://life-balance-blue.vercel.app/', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
