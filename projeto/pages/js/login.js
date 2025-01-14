@@ -8,7 +8,7 @@ async function realizarLogin(event) {
         return;
     }
 
-    const response = await fetch('https://junction.proxy.rlwy.net/api/login', {
+    const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })

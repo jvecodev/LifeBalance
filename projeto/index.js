@@ -3,22 +3,13 @@ import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'; 
-import cors from 'cors';
-
-
 
 dotenv.config(); 
 
 const app = express();
 app.use(express.json()); 
-app.use(express.static(__dirname));
-app.use(cors());
+app.use(express.static('./pages'));
 
-app.use(cors({
-    origin: 'https://life-balance-blue.vercel.app/', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-}));
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -44,7 +35,7 @@ function autenticarToken(req, res, next) {
     }
 
     try {
- 
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         next();
@@ -75,13 +66,11 @@ app.get('/api/perfil', async (req, res) => {
 app.delete('/api/perfil', autenticarToken, async (req, res) => {
     try {
         console.log('Usuário autenticado para exclusão:', req.user);
-
         // Consulta para deletar o usuário baseado no ID
         const [resultado] = await connection.query(
             'DELETE FROM Usuario WHERE id_usuario = ?',
             [req.user.id_usuario]
         );
-
         if (resultado.affectedRows > 0) {
             return res.json({ message: 'Usuário deletado com sucesso' });
         } else {
@@ -93,9 +82,6 @@ app.delete('/api/perfil', autenticarToken, async (req, res) => {
     }
 });
 
-
-
-
 app.put('/api/perfil', autenticarToken, async (req, res) => {
     console.log('Dados recebidos no PUT:', req.body);
     console.log('Usuário autenticado:', req.user);
@@ -103,7 +89,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
     try {
         const { nome, email, senha } = req.body;
 
-      
+
         if (!senha) {
             const [usuarioAtualizado] = await connection.query(
                 'UPDATE Usuario SET nome = ?, email = ? WHERE id_usuario = ?',
@@ -117,7 +103,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
             }
         }
 
-      
+
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
@@ -135,6 +121,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
         console.error('Erro ao atualizar usuário:', error);
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
+});
 });    
     
 
@@ -222,7 +209,7 @@ app.post('/api/metas', autenticarToken, async (req, res) => {
         res.status(500).json({ message: 'Erro ao registrar meta' });
     }
 
-    
+
 });
 
 app.get('/api/metas', autenticarToken, async (req, res) => {
@@ -245,7 +232,7 @@ app.delete('/api/metas/:id_meta', autenticarToken, async (req, res) => {
     const { id_meta } = req.params;
 
     try {
-        
+
         const [meta] = await connection.query('SELECT * FROM Metas WHERE id_meta = ? AND id_usuario = ?', [id_meta, req.user.id_usuario]);
 
         if (meta.length === 0) {
@@ -294,7 +281,7 @@ app.post('/api/atividades', autenticarToken, async (req, res) => {
     try {
         const query = 'INSERT INTO Atividades (id_usuario, atividade, data_treino) VALUES (?, ?, ?)';
         await connection.query(query, [req.user.id_usuario, atividade, data_treino]); 
-        
+
 
         res.status(201).json({ message: 'Atividade registrada com sucesso' });
     } catch (error) {
@@ -305,13 +292,13 @@ app.post('/api/atividades', autenticarToken, async (req, res) => {
 
 app.get('/api/atividades', autenticarToken, async (req, res) => {
     try {
-    
+
         const idUsuario = req.user.id_usuario;
 
         const query = 'SELECT * FROM Atividades WHERE id_usuario = ?';
         const [atividades] = await connection.query(query, [idUsuario]);
 
-       
+
         if (atividades.length === 0) {
             return res.status(200).json({ atividades: [] });
         }
@@ -327,7 +314,7 @@ app.get('/api/atividades-mensais', autenticarToken, async (req, res) => {
     try {
         const idUsuario = req.user.id_usuario;
 
-     
+
         const query = `
             SELECT atividade, COUNT(*) as total
             FROM Atividades
@@ -348,5 +335,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
