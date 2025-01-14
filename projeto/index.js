@@ -122,7 +122,7 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
 });
-});    
+
     
 
 app.get('/api/cadastrar', async (req, res) => {
