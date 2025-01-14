@@ -300,6 +300,7 @@ nav{
     justify-content: center; 
     align-items: center; 
     padding: 50px 0; 
+   
 }
 
 .footer {
@@ -310,6 +311,7 @@ nav{
     font-family: var(--font-text);
     flex-direction: column;
     width: 100%;
+    
     max-width: 100vh; 
     border-radius: 20px;
     border: #007BFF 2px solid;

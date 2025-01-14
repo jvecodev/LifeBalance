@@ -63,6 +63,29 @@ app.get('/api/perfil', async (req, res) => {
 });
 
 
+app.delete('/api/perfil', autenticarToken, async (req, res) => {
+    try {
+        console.log('Usuário autenticado para exclusão:', req.user);
+
+        // Consulta para deletar o usuário baseado no ID
+        const [resultado] = await connection.query(
+            'DELETE FROM Usuario WHERE id_usuario = ?',
+            [req.user.id_usuario]
+        );
+
+        if (resultado.affectedRows > 0) {
+            return res.json({ message: 'Usuário deletado com sucesso' });
+        } else {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+    } catch (error) {
+        console.error('Erro ao deletar usuário:', error);
+        return res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+});
+
+
+
 
 app.put('/api/perfil', autenticarToken, async (req, res) => {
     console.log('Dados recebidos no PUT:', req.body);
@@ -103,7 +126,8 @@ app.put('/api/perfil', autenticarToken, async (req, res) => {
         console.error('Erro ao atualizar usuário:', error);
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-});
+});    
+    
 
 app.get('/api/cadastrar', async (req, res) => {
     const query = 'SELECT nome FROM Usuario ORDER BY id_usuario DESC LIMIT 1'; 

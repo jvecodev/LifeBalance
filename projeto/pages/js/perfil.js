@@ -20,6 +20,60 @@ document.addEventListener('DOMContentLoaded', () => {
         senha: ''
     };
 
+  
+
+    const btnSair = document.getElementById('sair-pt');
+    const btnSairEn = document.getElementById('sair-en');
+    
+    // Adicione verificações para evitar erros caso os elementos não sejam encontrados
+    if (btnSair) {
+        btnSair.addEventListener('click', sairConta);
+    }
+    
+    if (btnSairEn) {
+        btnSairEn.addEventListener('click', sairConta);
+    }
+    
+
+    const token = localStorage.getItem('token');
+    
+    function sairConta() {
+        console.log('Botão de sair clicado');
+        if (!token) {
+            alert('Usuário não autenticado. Faça login novamente.');
+            window.open('login.html', '_self');
+            return;
+        }
+    
+        fetch('/api/perfil', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao excluir a conta');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Conta excluída com sucesso:', data);
+            localStorage.removeItem('token');
+            window.open('lifeBalance.html', '_self');
+        })
+        .catch(error => {
+            console.error('Erro ao excluir a conta:', error);
+            alert('Erro ao excluir a conta. Tente novamente mais tarde.');
+        });
+    }
+    
+    // Adiciona os eventos de clique nos botões de logout
+    btnSair.addEventListener('click', sairConta);
+    btnSairEn.addEventListener('click', sairConta);
+    
+
     function carregarPerfil() {
         fetch('/api/perfil')
             .then(response => response.json())

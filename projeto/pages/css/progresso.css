@@ -80,28 +80,31 @@
     align-items: center;
     height: 100vh;
     padding: 20px;
+   
 
 
     
 }
 .aboutIMC h3, h4{
-    color: rgb(121, 121, 121);
+    color: rgb(255, 255, 255);
     font-family: var(--font-text);
     font-size: 20px;
     font-weight: normal;
     text-align: center;
 }
+.aboutIMC h4{
+    color: #00d9ff;
+}
 
 .texto{
     font-family: var(--font-text);
     flex: 1;
-    background-color: rgb(228, 228, 228);
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: url('../img/branco.jpg') no-repeat center center/cover ;   
+    box-shadow: white 0px 5px 5px 0px;
     
     
 }
@@ -255,8 +258,9 @@ label {
     margin: 0 auto;
     margin-bottom: 50px;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4d8;
     border-radius: 10px; 
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
@@ -280,7 +284,7 @@ label {
 .grafico-container::after {
     content: "Carregando ";
     font-size: 16px;
-    color: #888;
+    color: #000000;
     display: block;
     text-align: center;
     margin-top: 50px;
