@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     senhaEn.addEventListener('click', () => editarCampo('senha', 'en'));
 
     saveBtn.addEventListener('click', () => {
-        fetch('https://life-balance-beige.vercel.app/api/perfil', {
+        fetch('https://lifebalance-server.vercel.app//api/perfil', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

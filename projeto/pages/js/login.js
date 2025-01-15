@@ -8,7 +8,7 @@ async function realizarLogin(event) {
         return;
     }
 
-    const response = await fetch('https://life-balance-beige.vercel.app/api/login', {
+    const response = await fetch('https://lifebalance-server.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })

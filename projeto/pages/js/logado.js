@@ -122,7 +122,7 @@ cancelarMetas.addEventListener('click', (event) => {
 
 
 function exibirMetas() {
-    fetch('https://life-balance-beige.vercel.app/api/metas', {
+    fetch('https://lifebalance-server.vercel.app/api/metas', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ function exibirMetas() {
 function concluirMeta(metaId, event) {
     event.preventDefault(); 
 
-    fetch(`https://life-balance-beige.vercel.app/api/metas/${metaId}`, {
+    fetch(`https://lifebalance-server.vercel.app/api/metas/${metaId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ exibirMetas();
 
 
 function mostrarMensagemBemVindo() {
-    fetch('https://life-balance-beige.vercel.app/api/cadastrar', {
+    fetch('https://lifebalance-server.vercel.app/api/cadastrar', {
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json'
@@ -263,7 +263,7 @@ registrarImc.addEventListener('click', (event) => {
         imc: (peso / ((altura / 100) ** 2)).toFixed(2),
     };
 
-    fetch('https://life-balance-beige.vercel.app/api/caracteristica', {
+    fetch('https://lifebalance-server.vercel.app/api/caracteristica', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -326,7 +326,7 @@ document.getElementById('registrarAtividade').addEventListener('click', (event) 
         data_treino: data,
     };
 
-    fetch('https://life-balance-beige.vercel.app/api/atividades', {
+    fetch('https://lifebalance-server.vercel.app/api/atividades', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function atualizarListaAtividades() {
-    fetch('https://life-balance-beige.vercel.app/api/atividades', {
+    fetch('https://lifebalance-server.vercel.app/api/atividades', {
         headers: {
             'Authorization': `Bearer ${token}`, 
         },
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', atualizarListaAtividades);
 function atualizarContagemMensal() {
-    fetch('https://life-balance-beige.vercel.app/api/atividades-mensais', {
+    fetch('https://lifebalance-server.vercel.app/api/atividades-mensais', {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
@@ -539,7 +539,7 @@ function contarAtividadesPorMes(atividades) {
 
 
 function atualizarGraficoGerais() {
-    fetch('https://life-balance-beige.vercel.app/api/atividades', {
+    fetch('https://lifebalance-server.vercel.app/api/atividades', {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
