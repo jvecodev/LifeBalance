@@ -7,7 +7,7 @@ function cadastrar() {
     if (nome && email && senha) {
         const usuario = { nome, email, senha };
 
-        fetch('https://lifebalance-server.vercel.app//api/cadastrar', {
+        fetch('https://lifebalance-server.vercel.app/api/cadastrar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(usuario)
