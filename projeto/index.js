@@ -3,12 +3,22 @@ import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'; 
+import cors from 'cors';
+
+
 
 dotenv.config(); 
 
 const app = express();
 app.use(express.json()); 
 app.use(express.static('./pages'));
+
+
+app.use(cors({
+    origin: 'https://lifebalance-gold.vercel.app/', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+}));
 
 
 const DATABASE_URL = process.env.DATABASE_URL;
