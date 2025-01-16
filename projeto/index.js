@@ -3,16 +3,14 @@ import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import cors from 'cors';
 
 
 
-// Configurar o CORS
-app.use(cors({
-    origin: 'https://lifebalance-gold.vercel.app', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization'] 
-}));
+app.get('/', function (req, res) {
+    res.send('Hello World')
+  })
+
+
 
 
 dotenv.config(); 
