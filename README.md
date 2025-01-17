@@ -2,7 +2,7 @@
 
 Life Balance é um projeto web desenvolvido para ajudar os usuários a gerenciar suas atividades físicas e manter um estilo de vida saudável. Através deste site, os usuários podem agendar atividades físicas, registrar os esportes realizados, contabilizar essas atividades e calcular seu Índice de Massa Corporal (IMC).
 
-- **Em desenvolvimento**
+
 
 ## Funcionalidades
 
