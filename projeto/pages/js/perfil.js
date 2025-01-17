@@ -20,37 +20,63 @@ document.addEventListener('DOMContentLoaded', () => {
         senha: ''
     };
 
-  
-
-    const btnSair = document.getElementById('sair-pt');
-    const btnSairEn = document.getElementById('sair-en');
-    
-    // Adicione verificações para evitar erros caso os elementos não sejam encontrados
-    if (btnSair) {
-        btnSair.addEventListener('click', sairConta);
-    }
-    
-    if (btnSairEn) {
-        btnSairEn.addEventListener('click', sairConta);
-    }
-    
-
     const token = localStorage.getItem('token');
-    
-    function sairConta() {
-        console.log('Botão de sair clicado');
+
+    function carregarPerfil() {
         if (!token) {
             alert('Usuário não autenticado. Faça login novamente.');
             window.open('login.html', '_self');
             return;
         }
-    
-        fetch('hhttps://life-balance-server.vercel.app/api/perfil', {
+
+        fetch('https://life-balance-server.vercel.app/api/perfil', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar perfil do usuário');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.usuario) {
+                userData = {
+                    nome: data.usuario.nome,
+                    email: data.usuario.email,
+                    senha: ''
+                };
+
+                document.getElementById('nome-value').textContent = data.usuario.nome;
+                document.getElementById('nome-value-en').textContent = data.usuario.nome;
+                document.getElementById('email-value').textContent = data.usuario.email;
+                document.getElementById('email-value-en').textContent = data.usuario.email;
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar perfil:', error);
+            alert('Erro ao carregar os dados do perfil. Faça login novamente.');
+            window.open('login.html', '_self');
+        });
+    }
+
+
+    function sairConta() {
+        if (!token) {
+            alert('Usuário não autenticado. Faça login novamente.');
+            window.open('login.html', '_self');
+            return;
+        }
+
+        fetch('https://life-balance-server.vercel.app/api/perfil', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
+                'Authorization': `Bearer ${token}`
+            }
         })
         .then(response => {
             if (!response.ok) {
@@ -68,30 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao excluir a conta. Tente novamente mais tarde.');
         });
     }
-    
-    // Adiciona os eventos de clique nos botões de logout
-    btnSair.addEventListener('click', sairConta);
-    btnSairEn.addEventListener('click', sairConta);
-    
 
-    function carregarPerfil() {
-        fetch('https://life-balance-server.vercel.app/api/perfil')
-            .then(response => response.json())
-            .then(data => {
-                if (data.usuario) {
-                    userData = {
-                        nome: data.usuario.nome,
-                        email: data.usuario.email,
-                        senha: data.usuario.senha
-                    };
+    function alterarIdioma(idioma) {
+        const elementosPt = document.querySelectorAll('[data-lang="pt"]');
+        const elementosEn = document.querySelectorAll('[data-lang="en"]');
 
-                    document.getElementById('nome-value').textContent = data.usuario.nome;
-                    document.getElementById('nome-value-en').textContent = data.usuario.nome;
-                    document.getElementById('email-value').textContent = data.usuario.email;
-                    document.getElementById('email-value-en').textContent = data.usuario.email;
-                }
-            })
-            .catch(error => console.error('Erro ao carregar perfil:', error));
+        if (idioma === 'pt') {
+            elementosPt.forEach(element => element.style.display = 'block');
+            elementosEn.forEach(element => element.style.display = 'none');
+        } else {
+            elementosPt.forEach(element => element.style.display = 'none');
+            elementosEn.forEach(element => element.style.display = 'block');
+        }
     }
 
     function editarCampo(campo, lang) {
@@ -117,19 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function alterarIdioma(idioma) {
-        const elementosPt = document.querySelectorAll('[data-lang="pt"]');
-        const elementosEn = document.querySelectorAll('[data-lang="en"]');
-
-        if (idioma === 'pt') {
-            elementosPt.forEach(element => element.style.display = 'block');
-            elementosEn.forEach(element => element.style.display = 'none');
-        } else {
-            elementosPt.forEach(element => element.style.display = 'none');
-            elementosEn.forEach(element => element.style.display = 'block');
-        }
-    }
-
     carregarPerfil();
 
     nomePt.addEventListener('click', () => editarCampo('nome', 'pt'));
@@ -144,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(userData),
         })
@@ -153,50 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.message === 'Usuário atualizado com sucesso') {
                 console.log('Dados salvos com sucesso!');
                 saveBtn.style.display = 'none';
-                senhaFormContainer.style.display = 'none'; 
-                console.error('Erro inesperado:', data);
-            }
-        })
-        .catch(error => console.error('Erro ao salvar dados:', error));
-    });
-
-
-    editSenhaBtn.addEventListener('click', () => {
-        senhaFormContainer.style.display = 'block';
-    });
-    editSenhaBtnEn.addEventListener('click', () => {
-        senhaFormContainer.style.display = 'block';
-    });
-
-    cancelarSenhaBtn.addEventListener('click', () => {
-        senhaFormContainer.style.display = 'none';
-    });
-
-    senhaForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const novaSenha = document.getElementById('nova-senha').value;
-        const confirmarSenha = document.getElementById('confirmar-senha').value;
-
-        if (novaSenha !== confirmarSenha) {
-            alert('As senhas não coincidem');
-            return;
-        }
-
-        userData.senha = novaSenha;
-
-        fetch('https://life-balance-server.vercel.app/api/perfil', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify(userData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Usuário atualizado com sucesso') {
-                console.log('Senha alterada com sucesso!');
-                senhaFormContainer.style.display = 'none'; 
+                senhaFormContainer.style.display = 'none';
             } else {
                 console.error('Erro inesperado:', data);
             }
@@ -204,7 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Erro ao salvar dados:', error));
     });
 
-
     btnPt.addEventListener('click', () => alterarIdioma('pt'));
     btnEn.addEventListener('click', () => alterarIdioma('en'));
+
+    if (btnSair) btnSair.addEventListener('click', sairConta);
+    if (btnSairEn) btnSairEn.addEventListener('click', sairConta);
 });

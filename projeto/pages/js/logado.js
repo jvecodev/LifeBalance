@@ -194,10 +194,21 @@ exibirMetas();
 
 
 function mostrarMensagemBemVindo() {
+    const token = localStorage.getItem('token'); // Supondo que o token esteja armazenado no localStorage
+
+    if (!token) {
+        console.error('Token não encontrado. Usuário não autenticado.');
+        const mensagem = document.getElementById('mensagem');
+        mensagem.innerHTML = 'Usuário não autenticado.';
+        mensagem.style.color = 'red';
+        return;
+    }
+
     fetch('https://life-balance-server.vercel.app/api/cadastrar', {
         method: 'GET',
         headers: { 
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Adicionando o token no cabeçalho
         }
     })
     .then(response => {
@@ -209,8 +220,8 @@ function mostrarMensagemBemVindo() {
     })
     .then(data => {
         console.log('Dados recebidos:', data);
-        
-        const nomeUsuario = data.nome;
+
+        const nomeUsuario = data.usuario.nome; // Ajustado para corresponder ao formato do objeto retornado
 
         const mensagem = document.getElementById('mensagem');
         const msg = document.getElementById('msg');
@@ -227,9 +238,8 @@ function mostrarMensagemBemVindo() {
     });
 }
 
-
-
 mostrarMensagemBemVindo();
+
 
 document.querySelectorAll('ul a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
