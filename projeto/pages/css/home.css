@@ -450,7 +450,7 @@ input::placeholder {
     width: 50%;
     height: 50%;
     background-color: rgb(94, 94, 94); 
-    background:url('../img/bike.jpg') no-repeat center center;
+    background:url('../img/bike.jpg') no-repeat center center/cover;
     justify-content: center;
     align-items: center;
 }
