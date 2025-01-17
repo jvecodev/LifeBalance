@@ -27,5 +27,6 @@ Life Balance é um projeto web desenvolvido para ajudar os usuários a gerenciar
   - Banco de dados hospedado na nuvem utilizando **Railway**.
 
 ![image](https://github.com/user-attachments/assets/2211fe95-58b6-40b3-accc-d56f827a0084)
+https://life-balance-nu.vercel.app/
 
   
