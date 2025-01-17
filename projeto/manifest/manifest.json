@@ -1,0 +1,18 @@
+{
+  "name": "LifeBalance",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "short_name": "LifeBalance",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "categories": [
+    "education",
+    "fitness",
+    "health",
+    "lifestyle",
+    "medical",
+    "personalization"
+  ]
+}
