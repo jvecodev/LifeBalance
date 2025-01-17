@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
     
-        fetch('https://life-balance-beige.vercel.app/api/perfil', {
+        fetch('hhttps://life-balance-server.vercel.app/api/perfil', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function carregarPerfil() {
-        fetch('/api/perfil')
+        fetch('https://life-balance-server.vercel.app/api/perfil')
             .then(response => response.json())
             .then(data => {
                 if (data.usuario) {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     senhaEn.addEventListener('click', () => editarCampo('senha', 'en'));
 
     saveBtn.addEventListener('click', () => {
-        fetch('https://life-balance-server-of8ff1f6z.vercel.app/api/perfil', {
+        fetch('https://life-balance-server.vercel.app/api/perfil', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         userData.senha = novaSenha;
 
-        fetch('https://life-balance-server-of8ff1f6z.vercel.app/api/perfil', {
+        fetch('https://life-balance-server.vercel.app/api/perfil', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
