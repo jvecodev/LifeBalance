@@ -12,6 +12,14 @@
     <title>Life Balance</title>
 </head>
 <body>
+    <script >
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('pwabuilder-sw.js');
+            });
+        }
+    </script>
+    
     <header class="navbar">
         <main class="contentNav">
             <main class="lenguage">
