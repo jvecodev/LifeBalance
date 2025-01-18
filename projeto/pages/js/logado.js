@@ -290,13 +290,13 @@ registrarImc.addEventListener('click', (event) => {
             let cor = '';
 
             // Classificação do IMC
-            if (imcValue < 18.5) {
+            if (imcValue < 20.5) {
                 mensagem = `Seu IMC é ${imc.imc}. Você está abaixo`;
                 cor = 'orange';
-            } else if (imcValue >= 18.5 && imcValue <= 24.9) {
+            } else if (imcValue >= 18.5 && imcValue <= 28) {
                 mensagem = `Seu IMC é ${imc.imc}. Você está saudável.`;
                 cor = 'green';
-            } else if (imcValue >= 25) {
+            } else if (imcValue >= 28.1) {
                 mensagem = ` Seu IMC é ${imc.imc}. Você está acima do peso.`;
                 cor = 'red';
             }
