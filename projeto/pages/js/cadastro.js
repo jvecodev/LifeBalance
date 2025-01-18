@@ -20,7 +20,7 @@ function cadastrar() {
         })
         .then(data => {
             console.log('Usuário cadastrado com sucesso', data);
-            window.open('login.html', '_blank'); 
+            location.href = 'login.html';
         })
         .catch(error => {
             console.error('Erro ao cadastrar usuário', error);

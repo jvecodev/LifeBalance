@@ -18,7 +18,7 @@ async function realizarLogin(event) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         console.log('token:', data.token);
-        window.open('home.html', '_self');
+        location.href = 'index.html';
     } else if(email === '' || senha === '') {
         alert('Por favor, preencha todos os campos');
     }
