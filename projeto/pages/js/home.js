@@ -16,6 +16,8 @@ menuItems.forEach((item) => {
 
 
 
+
+
 document.querySelectorAll('ul a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
     e.preventDefault();

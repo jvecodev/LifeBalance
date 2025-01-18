@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Erro ao carregar perfil:', error);
             alert('Erro ao carregar os dados do perfil. Faça login novamente.');
-            window.open('login.html', '_self');
+            location.href = 'login.html';
         });
     }
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             console.log('Conta excluída com sucesso:', data);
             localStorage.removeItem('token');
-            window.open('index.html', '_self');
+            location.href = 'login.html';
         })
         .catch(error => {
             console.error('Erro ao excluir a conta:', error);

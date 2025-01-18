@@ -25,6 +25,17 @@
     cursor: pointer;
 }
 
+#login{
+    color: white;
+    text-decoration: none;
+}
+
+#login:hover{
+    color: #007BFF;
+    transition: 0.5s;
+    scale: 1.1;
+}
+
 /* Corpo da página */
 body {
     font-family: Arial, sans-serif;
