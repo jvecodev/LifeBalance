@@ -393,7 +393,6 @@ document.addEventListener('click', (event) => {
 });
 
 
-
 function verificarMudancaDeMes() {
     const mesAtual = new Date().getMonth();
 
@@ -419,14 +418,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function atualizarListaAtividades() {
     fetch('https://life-balance-server.vercel.app/api/atividades', {
         headers: {
-            'Authorization': `Bearer ${token}`, 
+            'Authorization': `Bearer ${token}`,
         },
     })
     .then(response => response.json())
     .then(data => {
         const atividades = data.atividades;
 
-      
         const contador = {};
         atividades.forEach(atividade => {
             const mesAtividade = new Date(atividade.data_treino).getMonth();
@@ -436,7 +434,6 @@ function atualizarListaAtividades() {
             }
         });
 
-     
         const resumoMes = document.getElementById('resumo-mes');
         const mesAtual = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
         resumoMes.innerHTML = `<h3>Atividades de ${mesAtual}</h3>`;
@@ -450,7 +447,6 @@ function atualizarListaAtividades() {
             resumoMes.innerHTML += `<div class="contador-atividades">${contadorHtml}</div>`;
         }
 
-       
         const listaAtividades = document.getElementById('lista-atividades');
         listaAtividades.innerHTML = '';
 
@@ -470,6 +466,7 @@ function atualizarListaAtividades() {
             atividadeElemento.innerHTML = `
                 <p><strong>Atividade:</strong> ${atividade.atividade}</p>
                 <p><strong>Data:</strong> ${new Date(atividade.data_treino).toLocaleDateString()}</p>
+                <button class="btn-excluir" data-id="${atividade.id}">Excluir</button>
             `;
             listaAtividades.appendChild(atividadeElemento);
         });
@@ -482,16 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
     atualizarListaAtividades();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    atualizarListaAtividades();
-});
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    atualizarListaAtividades();
-});
 
 
 document.addEventListener('DOMContentLoaded', atualizarListaAtividades);
