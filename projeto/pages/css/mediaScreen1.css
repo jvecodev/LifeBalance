@@ -55,6 +55,11 @@ body {
         transition: 0.8s;
         scale: 1.05;
     }
+
+    .about > div{
+        
+        width: 100%;
+    }
     
     
 
@@ -301,7 +306,10 @@ body {
             align-items: center;
     
         }
-    
+        .about > div{
+            width: 100%;
+        }
+
         .text {
             
             color: #ffffff;
