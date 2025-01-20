@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function sairConta() {
         if (!token) {
             alert('Usuário não autenticado. Faça login novamente.');
-            window.open('login.html', '_self');
+            location.href = 'login.html';
             return;
         }
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             console.log('Conta excluída com sucesso:', data);
             localStorage.removeItem('token');
-            location.href = 'login.html';
+            location.href = 'index.html';
         })
         .catch(error => {
             console.error('Erro ao excluir a conta:', error);
