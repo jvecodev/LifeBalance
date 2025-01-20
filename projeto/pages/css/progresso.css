@@ -54,6 +54,24 @@
     cursor: pointer;
 }
 
+.btn-excluir{
+    width: 100px;
+    height: 30px;
+    border: #007BFF 2px solid;
+    background-color: #007bff94;
+    border-radius: 20px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    transition: 0.8s;
+    scale: 1.05;
+    background-color: #0059ff;
+
+}
+
 .IMC form{
     display: flex;
     flex-direction: column;
