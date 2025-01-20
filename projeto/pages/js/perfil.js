@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelarSenhaBtn = document.getElementById('cancelar-senha-btn');
     const btnPt = document.getElementById('btn-pt');
     const btnEn = document.getElementById('btn-en');
+    const btnSair = document.getElementById('sair-pt');
+    const btnSairEn = document.getElementById('sair-en');
+
 
     let userData = {
         nome: '',
@@ -65,12 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function sairConta() {
+        console.log('Tentativa de excluir a conta iniciada.');
+    
         if (!token) {
             alert('Usuário não autenticado. Faça login novamente.');
             location.href = 'login.html';
             return;
         }
-
+    
         fetch('https://life-balance-server.vercel.app/api/perfil', {
             method: 'DELETE',
             headers: {
@@ -94,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao excluir a conta. Tente novamente mais tarde.');
         });
     }
+    
 
     function alterarIdioma(idioma) {
         const elementosPt = document.querySelectorAll('[data-lang="pt"]');
@@ -165,6 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btnPt.addEventListener('click', () => alterarIdioma('pt'));
     btnEn.addEventListener('click', () => alterarIdioma('en'));
 
-    if (btnSair) btnSair.addEventListener('click', sairConta);
-    if (btnSairEn) btnSairEn.addEventListener('click', sairConta);
+    if (btnSair) {
+        btnSair.addEventListener('click', sairConta);
+    }
+    if (btnSairEn) {
+        btnSairEn.addEventListener('click', sairConta);
+    }
+    
 });
