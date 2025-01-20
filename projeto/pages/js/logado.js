@@ -466,7 +466,7 @@ function atualizarListaAtividades() {
             atividadeElemento.innerHTML = `
                 <p><strong>Atividade:</strong> ${atividade.atividade}</p>
                 <p><strong>Data:</strong> ${new Date(atividade.data_treino).toLocaleDateString()}</p>
-                <button class="btn-excluir" data-id="${atividade.id}">Excluir</button>
+                <button class="btn-excluir" data-id="${atividade.id_atividade}">Excluir</button>
             `;
             listaAtividades.appendChild(atividadeElemento);
         });
