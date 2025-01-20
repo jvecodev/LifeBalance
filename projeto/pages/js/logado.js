@@ -356,6 +356,44 @@ document.getElementById('registrarAtividade').addEventListener('click', (event) 
         });
 });
 
+function excluirAtividade(id) {
+    fetch(`https://life-balance-server.vercel.app/api/atividades/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log(`Atividade com ID ${id} excluída com sucesso.`);
+                
+                
+                atualizarListaAtividades();
+
+               
+                atualizarGraficoGerais();
+
+                
+                atualizarContagemMensal();
+            } else {
+                console.error('Erro ao excluir a atividade:', response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Erro na requisição para excluir atividade:', error);
+        });
+}
+
+
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('btn-excluir')) {
+        const id = event.target.dataset.id;
+        excluirAtividade(id);
+    }
+});
+
+
+
 function verificarMudancaDeMes() {
     const mesAtual = new Date().getMonth();
 
