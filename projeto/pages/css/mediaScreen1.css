@@ -92,7 +92,7 @@ body {
         text-decoration: none;
     }
 
-    /* Estilo da seção conteúdo */
+    
     .conteudo {
         display: flex;
         flex-direction: column;
